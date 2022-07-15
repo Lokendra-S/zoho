@@ -1,0 +1,530 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #fdfffc;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* -----------------------   HOME       ------------------------------- */
+.userName,.logout_btn{
+    border: 1px solid #fe5f55 !important;
+    background-color: rgba(254, 95, 85, 0.15);
+    color: #fe5f55;
+}
+.logout_btn{
+    border: none !important;
+}
+.userName:hover,.userName:focus,.userName .dropdown-toggle,.logout_btn:hover,.show>.btn-primary.dropdown-toggle{
+    background-color: #fe5f55 !important;
+    color: #fdfffc !important;
+} 
+.userName_p{
+    position: relative;
+}
+.userName_p::before{
+    content: "";
+    top: 65%;
+    right: -50%;
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: rgba(16, 185, 129, 1);
+    border-radius: 50%;
+}
+.navbar-nav .active{
+    background-color: black;
+    text-align: center;
+    color: #fdfffc !important;
+    border-radius: 0.2rem;
+}
+.dropdown-item > .nav-link-drop{
+    color: #011627;
+    padding: 0 !important;
+}
+.input-group-text{
+    background-color: transparent !important;
+}
+.activeAplha{
+    color: #fe5f55;
+    font-weight: 500;
+}
+.card_img_container{
+    padding: 0 !important;
+}
+.card_img_container .heart_btn{
+    position: absolute;
+    top: 7%;
+    right: 7%;
+    border-radius: 10%;
+    background-color: #fdfffc;
+}
+.card_img_container .rating_btn{
+    position: absolute;
+    top: 7%;
+    right: 23%;
+    border-radius: 10%;
+    border: 1px solid #577399 !important;
+    background-color: rgba(87, 115, 153, 0.7);
+    color: #fdfffc;
+}
+.heart_btn .heart_icon{
+    font-size: 1.3rem !important;
+    color: #fe5f55;
+}
+.card_img{
+    aspect-ratio: 3/2 !important;
+    border-radius: 0.3rem !important;
+}
+.card_body{
+    margin-top: -5rem !important;
+    background-color: #fdfffc !important;
+    color: #011627;
+    border-radius: 0.3rem !important;
+}
+.card_body .book_name{
+    font-size: 1.1rem !important;
+    margin-bottom: 00.2rem !important;
+}
+.card_body .book_author{
+    opacity: 0.5;
+    font-size: 0.9rem !important;
+}
+.card_body .book_desc{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+.card_body .book_desc, .card_body .book_release{
+    font-size: 0.8rem;
+}
+.card_body .book_release{
+    opacity: 0.7;
+}
+.card_body .card_icon,.card_body .card_icon1{
+    font-size: 1.2rem !important;
+    font-weight: bolder !important;
+}
+.card_body .card_icon1{
+    margin-right: 0.4rem !important;
+}
+.card_body .cart_btn,.card_body1 .cart_btn{
+    border: 1px solid #fe5f55 !important;
+    background-color: rgba(254, 95, 85, 0.25);
+    color: #fe5f55;
+}
+.card_body .buy_btn,.card_body1 .buy_btn{
+    font-size: 0.9rem !important;
+    border: 1px solid #577399 !important;
+    background-color: rgba(87, 115, 153, 0.2);
+    color: #577399;
+}
+/* .alphabets{} */
+
+.rating_book .star{
+    color: #ff9f1c;
+}
+.paginationButtons{
+    list-style: none;
+}
+.paginationButtons a {
+    padding: 0.5rem 0.7rem !important;
+    margin: 0.4rem 0.5rem !important;
+    border: 1px solid #d1dfdb;
+    border-radius: 5px;
+    color: rgba(75, 85, 99, 1);
+    background-color: rgba(243, 244, 246, 1);
+    cursor: pointer;
+    text-decoration: none;
+}
+.paginationButtons a:hover,.paginationActive a{
+    color: rgba(243, 244, 246, 1) !important;
+    background-color: rgba(75, 85, 99, 1) !important;
+}
+ul{
+    padding-left: 0 !important;
+}
+
+.footer_container{
+    background-color: #eff6ff !important;
+}
+.product_updates{
+    background-color: #1d4ed8;
+    color: #fdfffc;
+}
+.product_updates .product_header,.office .office_header,.contact .contact_header{
+    font-weight: 600 !important;
+    letter-spacing: 0.03rem;
+}
+.product_updates .input_email{
+    background-color: transparent !important;
+    color: #fdfffc !important;
+    border: none !important;
+    border-bottom:1px solid #fdfffc !important;
+}
+.product_updates .input_email::placeholder{
+    color: #fdfffc !important;
+    opacity: 0.5;
+}
+.product_updates .input_submit{
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom:1px solid #fdfffc !important;
+}
+.tab-content{
+    width: 80%;
+}
+.nav-pills .nav-item .nav-link {
+    padding: 0.5rem 3rem !important;
+    color: #011627 !important;
+}
+.nav-pills .nav-link.active{
+    background-color: #eff6ff !important;
+    color: #1d4ed8 !important;
+}
+.login_btn,.signup_btn{
+    background-color: #011627 !important;
+}
+.google_icon{color: #35c855;}
+.facebook_icon{color: #1d4ed8;}
+.linkedin_icon{color: #1d4ed8;}
+.signup_modal_btn, .loginsignup_modal_btn{cursor:text;}
+.err_text{
+    background-color: rgba(254, 95, 85, 0.25) !important;
+    color: #fe5f55;
+}
+
+/* -----------------------   HOME       ------------------------------- */
+
+/* -----------------------   CART       ------------------------------- */
+
+.cart_header{
+    color: #011627 !important;
+}
+.cart_img{
+    aspect-ratio: 3/2 !important;
+}
+.cart_body_desc,.cart_isbn_number{
+    opacity: 0.7;
+    font-size: 0.85rem !important;
+}
+.remove_cart{
+    color: #fe5f55 !important;
+}
+.quan_btn{
+    border: none !important;
+    background-color: rgba(87, 115, 153, 0.2) !important;
+    color: #011627 !important;
+}
+.quan_btn:hover{
+    background-color: rgba(87, 115, 153, 0.8) !important;
+    color: #fdfffc !important;
+}
+sub{
+    bottom: -0.11rem !important;
+    opacity: 0.5;
+}
+sup{
+    top: -0.35rem !important;
+    opacity: 0.5;
+}
+.cart_summary_container{
+    background-color: #d1d5db !important;
+}
+.back_to_bag{
+    opacity: 0.5;
+}
+.address_container{
+    /* background-color: #1d4ed8; */
+    color: #011627;
+}
+.accordion-button:focus{
+    box-shadow: none !important;
+}
+/* -----------------------   CART       ------------------------------- */
+/*---------------------------   SINGLE BOOK       ---------------------------------------*/
+.single_book_img_container{
+    /* width: 50% !important;
+    height: 50% !important; */
+    /* aspect-ratio: 16/9 !important; */
+}
+.about_book_header{
+    letter-spacing: 0.1rem !important;
+}
+.about_content{
+    opacity: 0.7 !important;
+}
+.single_book_img{
+    aspect-ratio: 3/2 !important;
+}
+/*---------------------------   SINGLE BOOK       ---------------------------------------*/
+
+@media only screen and (min-width:350px) and (max-width:577px){
+    .app_name{
+        font-size: 2rem !important;
+    }
+    .navbar-collapse{
+        box-shadow: none !important;
+    }
+    .header_container{
+        padding: 1rem !important;
+        margin: 0 !important;
+        overflow: hidden;
+    }
+    .home_nav{
+        width: 50%;
+    }
+    .searchScreen{
+        display: none !important;
+    }
+    .searchScreen_small{
+        display: block !important;
+        margin: 1rem auto !important;
+        width: 100% !important;
+    }
+    .userName_p::before{
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+    .alphabet_container{
+        display: flex !important;
+        flex-wrap: wrap !important;
+    }
+    .company{
+        flex-direction: column !important;
+        padding: 1rem 0 !important;
+    }
+    .bottom_nav_container{
+        padding: 1rem 0 !important;
+    }
+    .bottom_nav_container .copyright{
+        text-align: center !important;
+    }
+    .product_updates .product_header,.office .office_header,.contact .contact_header{
+        font-size: 1rem !important;
+        letter-spacing: 0.02rem !important;
+    }
+    .contact_desc,.office_desc,.botton_nav,.bottom_nav_container .copyright,.product_updates .input_email, .product_updates .input_submit{
+        font-size: 0.8rem !important;
+    }
+    .tab-content{
+        width: 90%;
+    }
+    /* -----------------------   HOME       ------------------------------- */
+
+    /* -----------------------   CART       ------------------------------- */
+    .cart_summary_container{
+        padding: 2rem !important;
+    }
+    .address_check_container{
+        margin-top: 1rem !important;
+    }
+    /* -----------------------   CART       ------------------------------- */
+
+    
+}
+@media only screen and (min-width:350px) and (max-width:451px){
+    .book_head{
+        padding: 1rem !important;
+    }
+    .nav-pills .nav-item .nav-link {
+        padding: 0.5rem 1.5rem !important;
+    }
+    .userName_p::before{
+        right: -450%;
+    }
+    .card_body .buy_btn{
+        min-width: 90%;
+        font-size: 0.8rem !important;
+    }
+    .card_body .card_icon,.card_body .card_icon1{
+        font-size: 1rem !important;
+    }
+    .card_body .book_desc{
+        -webkit-line-clamp: 2;
+    }
+    .card_img_container .heart_btn{
+        top: 7%;
+    }
+    .card_img_container .rating_btn{
+        right: 26%;
+    }
+    /* -----------------------   HOME       ------------------------------- */
+
+/* -----------------------   CART       ------------------------------- */
+/* -----------------------   CART       ------------------------------- */
+    
+}
+@media only screen and (min-width:450px) and (max-width:577px){
+    .userName_p::before{
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+    .card_img_container .heart_btn{
+        top: 7%;
+    }
+    .card_img_container .rating_btn{
+        right: 20%;
+    }
+
+    /* -----------------------   HOME       ------------------------------- */
+
+    /* -----------------------   CART       ------------------------------- */
+    
+    /* -----------------------   CART       ------------------------------- */
+}
+@media only screen and (min-width:576px) and (max-width:611px){
+    .card_body{
+        margin-top: -3rem !important;
+    }
+    .card_img_container .heart_btn{
+        right: 10% !important;
+        font-size: 0.9rem !important;
+    }
+    .card_img_container .rating_btn{
+        right: 35% !important;
+    }
+    .rating_btn .rating_text{
+        font-size: 0.9rem !important;
+    }
+    .rating_book .star{
+        color: #ff9f1c;
+        font-size: 0.5rem !important;
+    }
+/* -----------------------   HOME       ------------------------------- */
+
+/* -----------------------   CART       ------------------------------- */
+/* -----------------------   CART       ------------------------------- */
+}
+@media only screen and (min-width:576px) and (max-width:768px){
+    .searchScreen{
+        display: none !important;
+    }
+    .searchScreen_small{
+        display: block !important;
+        margin: 1rem auto !important;
+        width: 100% !important;
+    }
+    .card_body .book_desc{
+        -webkit-line-clamp: 2;
+    }   
+    .card_img_container .heart_btn{
+        right: 10%;
+    }
+    .card_img_container .rating_btn{
+        right: 30%;
+    }
+    .buy_btn .buy_text{
+        display: none;
+    }
+    .card_body .card_icon1{
+        margin-right: 0 !important;
+    }
+    .card_body .card_icon,.card_body .card_icon1{
+        font-size: 1.2rem !important;
+    }
+    .rating_book .star{
+        color: #ff9f1c;
+        font-size: 0.8rem !important;
+    }
+    .card_body .book_release{
+        font-size: 0.6rem;
+    }
+    .company{
+        flex-direction: column !important;
+        padding: 1rem 0 !important;
+    }
+    .bottom_nav_container .copyright{
+        text-align: center !important;
+    }
+    /* -----------------------   HOME       ------------------------------- */
+    /* -----------------------   CART       ------------------------------- */
+    .cart_summary_container{
+        padding: 2rem !important;
+    }
+    .address_check_container{
+        margin-top: 1rem !important;
+    }
+    /* -----------------------   CART       ------------------------------- */
+}
+@media only screen and (min-width:768px) and (max-width:992px){
+    .footer_1{
+        flex-direction: column;
+    }
+    .bottom_nav_container .copyright{
+        text-align: center !important;
+    }
+    /* -----------------------   HOME       ------------------------------- */
+
+    .cart_summary_container{
+        padding: 2rem !important;
+    }
+
+    /* -----------------------   CART       ------------------------------- */
+
+    .cart_img{
+        aspect-ratio: 3/2 !important;
+    }
+
+    /* -----------------------   CART       ------------------------------- */
+    .single_book_text,.about_author_content{
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+    }
+}
+@media only screen and (min-width:992px) and (max-width:1140px){
+    .card_img_container .heart_btn{
+        right: 8%;
+    }
+    .card_img_container .rating_btn{
+        right: 27%;
+    }
+    .card_body .buy_btn{
+        min-width: 80%;
+        font-size: 0.8rem !important;
+    }
+    .card_body .card_icon1{
+        margin-right: 0.2rem !important;
+    }
+    .card_body .card_icon,.card_body .card_icon1{
+        font-size: 1rem !important;
+    }
+/* -----------------------   HOME       ------------------------------- */
+
+/* -----------------------   CART       ------------------------------- */
+/* -----------------------   CART       ------------------------------- */
+    .about_author_content{
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+    }
+}
+@media only screen and (min-width:1400px) and (max-width:1501px){
+    .card_img_container .heart_btn{
+        right: 8%;
+    }
+    .card_img_container .rating_btn{
+        right: 27%;
+    }
+    .card_body .buy_btn{
+        min-width: 80%;
+        font-size: 0.8rem !important;
+    }
+    .card_body .card_icon1{
+        margin-right: 0.2rem !important;
+    }
+    .card_body .card_icon,.card_body .card_icon1{
+        font-size: 1rem !important;
+    }
+/* -----------------------   HOME       ------------------------------- */
+
+/* -----------------------   CART       ------------------------------- */
+/* -----------------------   CART       ------------------------------- */
+}
