@@ -40,7 +40,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "HOST": shrouded-crag-67008.herokuapp.com,
-  "proxy" : shrouded-crag-67008.herokuapp.com
+  }
 }
