@@ -4,6 +4,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+.te{
+    color: #35c855;
+}
 body{
     background-color: #fdfffc;
     font-family: 'Poppins', sans-serif;
@@ -76,7 +79,7 @@ body{
     color: #fe5f55;
 }
 .card_img{
-    aspect-ratio: 3/2 !important;
+    aspect-ratio: 1/1 !important;
     border-radius: 0.3rem !important;
 }
 .card_body{
@@ -88,6 +91,10 @@ body{
 .card_body .book_name{
     font-size: 1.1rem !important;
     margin-bottom: 00.2rem !important;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .card_body .book_author{
     opacity: 0.5;

@@ -4,20 +4,17 @@ import { IconContext } from 'react-icons'
 import { GrNext, GrPrevious } from 'react-icons/gr'
 
 import json_data from '../Pagination/MOCK_DATA.json'
+import { useContext } from 'react'
+import { BookContext } from '../../Context/App.context'
 
 function Pagination() {
-    const [ users,setUsers ] = useState(json_data.slice(0,351))
-    const [ page,setPage ] = useState(0)
-
-    const usersPerPage = 20
-    const currPage = usersPerPage * page
-    const displayUsers = () =>{
-        console.log(users.slice(currPage,currPage+usersPerPage))
-    } 
+    const { popularPages,popularPageChange,ChangeCurrPage } = useContext(BookContext)
+    const [ page,setPage ] = useState(1) 
     
-    const pageCount = Math.ceil(users.length/usersPerPage)
+    const pageCount = popularPages
     const changePage = ({ selected }) => {
-        setPage(selected)
+        console.log(selected+1)
+        ChangeCurrPage(selected+1)
     }
 
   return (

@@ -35,9 +35,10 @@ function Main() {
           <Header width={width}/>
           <Routes>
             <Route index path='/' element={<HomeCard width={width}/>} />
-            <Route index path='/best-sellers' element={<HomeCard width={width}/>} />
-            <Route path='/:id/wishlist' element={<HomeCard width={width}/>} />
-            <Route path='/:id/favourite' element={<HomeCard width={width}/>} />
+            <Route index path='/upcoming' element={<HomeCard width={width}/>} />
+            <Route path='/toprated' element={<HomeCard width={width}/>} />
+            <Route path='/nowplaying' element={<HomeCard width={width}/>} />
+            <Route path='/profile' element={<HomeCard width={width}/>} />
             <Route path='/:id/cart' element={<CartHome />} />
             <Route path='/:id/book/:bookId' element={<BookContent/>} />
           </Routes>

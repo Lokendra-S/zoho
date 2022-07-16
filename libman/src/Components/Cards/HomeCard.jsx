@@ -1,4 +1,5 @@
 import React from 'react'
+import { useContext } from 'react'
 import {
     Container,
     Dropdown,
@@ -7,12 +8,18 @@ import {
 } from 'react-bootstrap'
 import { IconContext } from 'react-icons'
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs'
+import { useLocation } from 'react-router-dom'
+import { AppContext, BookContext } from '../../Context/App.context'
 
 import Cards from './Card'
 import Pagination from './Pagination'
 
 
 function HomeCard({width}) {
+    const location = useLocation();
+    console.log(location.pathname);
+    const { popular } = useContext(BookContext)
+
   return (
     <Container fluid className='mt-2'>
         <Container fluid className='px-5 d-flex align-items-center justify-content-between book_head'>
@@ -52,8 +59,8 @@ function HomeCard({width}) {
         </Container>
         <Container fluid className='mt-3 px-4'>
             <Row>
-                {[1,2,3,4,5,6].map(e =>{
-                    return <Cards k={e}/>
+                {popular.map(e =>{
+                    return <Cards k={e.id} data={e} />
                 })}
             </Row>
         </Container>
