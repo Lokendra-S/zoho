@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useState } from 'react'
 import { useContext } from 'react'
 import {
     Container,
@@ -17,8 +18,22 @@ import Pagination from './Pagination'
 
 function HomeCard({width}) {
     const location = useLocation();
-    console.log(location.pathname);
-    const { popular } = useContext(BookContext)
+    const loc = location.pathname;
+    const { ChangeCurrPage,fetchTopRatedMovies,fetchPopularMovies,fetchNowPlayingMovies
+        ,fetchUpcomingMovies } = useContext(BookContext)
+
+    useEffect(()=>{
+        if(loc==="/toprated"){
+            fetchTopRatedMovies()
+        }else if(loc==="/upcoming"){
+            fetchUpcomingMovies()
+        }
+        else if(loc==="/nowplaying"){
+            fetchNowPlayingMovies()
+        }else{
+            fetchPopularMovies()
+        }
+    },[loc])
 
   return (
     <Container fluid className='mt-2'>
@@ -57,14 +72,7 @@ function HomeCard({width}) {
                 </Dropdown.Menu>
             </Dropdown>
         </Container>
-        <Container fluid className='mt-3 px-4'>
-            <Row>
-                {popular.map(e =>{
-                    return <Cards k={e.id} data={e} />
-                })}
-            </Row>
-        </Container>
-        <Pagination/>
+        <Pagination loc={loc} />
     </Container>
   )
 }

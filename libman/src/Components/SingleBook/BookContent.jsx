@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useEffect } from 'react'
 import { 
     Card, 
     Container, 
@@ -9,24 +10,34 @@ import {
 import { IconContext } from 'react-icons'
 import { BsStarFill,BsCartPlus,BsStarHalf,BsStar } from 'react-icons/bs'
 import { IoWalletOutline,IoHeartOutline } from 'react-icons/io5'
+import { BookContext } from '../../Context/App.context'
 
 import im from '../../Images/971.jpg'
 
 function BookContent() {
+
+    const currLoc = window.location.pathname.split("/").pop()
+
+    const { fetchSingleMovieSearch,movieData } = useContext(BookContext)
+
+    useEffect(()=>{
+        fetchSingleMovieSearch(currLoc)
+    },[currLoc])
+
   return (
-    <Container className='single_book_container my-4p-0'>
-        <Row className='gap-3 d-flex justify-content-center align-items-center'>
-            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="my-lg-4 shadow mx-3 ">
-                <Card className='w-100 border-0 p-xs-1 p-lg-3'>
-                    <Card.Body className='d-flex flex-column flex-md-row mx-4 card_body1 p-0 py-4'>
+    <Container className='single_book_container my-4 p-0'>
+        <Row className='gap-1 d-flex justify-content-center align-items-center'>
+            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="my-lg-1 shadow mx-1 ">
+                <Card className='w-100 border-0 p-xs-1 p-lg-0'>
+                    <Card.Body className='d-flex flex-column flex-md-row mx-2 card_body1 p-0 py-4'>
                         <Container fluid className='d-flex justify-content-center align-items-center single_book_img_container'>
-                            <Card.Img variant="top" className='single_book_img' src={im} />
+                            <Card.Img variant="top" className='single_book_img' src={movieData.image} />
                         </Container>
                         <Container fluid className='mt-4 d-flex flex-column justify-content-start align-items-start'>
                             <Container fluid className='p-0 d-flex justify-content-between'>
                                 <Container fluid className='p-0'>
-                                    <Card.Title className='fs-5'>Book Name</Card.Title>
-                                    <Card.Title className='fs-6'>Book Author</Card.Title>
+                                    <Card.Title className='fs-5'>{movieData.title}</Card.Title>
+                                    <Card.Title className='fs-6'>{movieData.year}</Card.Title>
                                 </Container>
                                 <Container fluid className='p-0'>
                                     <Card.Title className='fs-5 fw-bold'><sub>$</sub>57<sup>.00</sup></Card.Title>

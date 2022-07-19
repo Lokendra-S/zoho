@@ -40,7 +40,7 @@ function Main() {
             <Route path='/nowplaying' element={<HomeCard width={width}/>} />
             <Route path='/profile' element={<HomeCard width={width}/>} />
             <Route path='/:id/cart' element={<CartHome />} />
-            <Route path='/:id/book/:bookId' element={<BookContent/>} />
+            <Route path='/movie/:movieId' element={<BookContent/>} />
           </Routes>
           <Footer/>
         </Router>

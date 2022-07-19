@@ -2,52 +2,50 @@ package com.zoho.backend.models.Movie;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.zoho.backend.models.Movies;
+import com.zoho.backend.security.services.MovieService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+//https://imdb-api.com/en/API/MostPopularMovies/k_obrvl9xd
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/movie")
+@RequestMapping("/api/movie")
 public class tmdb {
+
     @Value("${tmdb_api_key}")
     public String apiKey;
 
+    @Autowired
+    MovieService movieService;
+
     RestTemplate restTemplate = new RestTemplate();
 
-    @PostMapping(
-            value = "/popular",
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            headers = {"content-type=application/json"}
+    @GetMapping(
+            value = "/toprated",
+            produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public String PopularMovies(@RequestBody String pageNo) {
-        JsonObject obj = new Gson().fromJson(pageNo, JsonObject.class);
-        String page = obj.get("pageNo").getAsString();
-//        System.out.println(mName);
-        String url1 ="https://api.themoviedb.org/3/movie/popular?api_key=%s&page=%s";
-        String url = String.format(url1, apiKey, page);
-        String res = restTemplate.getForObject(url,String.class);
-        return res;
+    public String TopIMDB() {
+        String url1 ="https://imdb-api.com/en/API/Top250Movies/%s";
+        String url = String.format(url1, apiKey);
+            return restTemplate.getForObject(url,String.class);
     }
 
-    @PostMapping(
-            value = "/toprated",
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            headers = {"content-type=application/json"}
+    @GetMapping(
+            value = "/popular",
+            produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public String TopRated(@RequestBody String pageNo) {
-        JsonObject obj = new Gson().fromJson(pageNo, JsonObject.class);
-        String page = obj.get("pageNo").getAsString();
-        String url1 ="https://api.themoviedb.org/3/movie/top_rated?api_key=%s&page=%s";
-        String url = String.format(url1, apiKey, page);
-        String res = restTemplate.getForObject(url,String.class);
-        return res;
+    public String PopularIMDB() {
+        String url1 ="https://imdb-api.com/en/API/MostPopularMovies/%s";
+        String url = String.format(url1, apiKey);
+        return restTemplate.getForObject(url,String.class);
     }
 
     @GetMapping(
@@ -55,11 +53,10 @@ public class tmdb {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public String Upcoming() {
-        String url1 ="https://api.themoviedb.org/3/movie/upcoming?api_key=%s&page=%d";
+        String url1 ="https://imdb-api.com/en/API/ComingSoon/%s";
         int page = 1;
-        String url = String.format(url1, apiKey, page);
-        String res = restTemplate.getForObject(url,String.class);
-        return res;
+        String url = String.format(url1, apiKey);
+        return restTemplate.getForObject(url,String.class);
     }
 
     @GetMapping(
@@ -67,11 +64,21 @@ public class tmdb {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public String NowPlaying() {
-        String url1 ="https://api.themoviedb.org/3/movie/now_playing?api_key=%s&page=%d";
+        String url1 ="https://imdb-api.com/en/API/InTheaters/%s";
         int page = 1;
         String url = String.format(url1, apiKey, page);
-        String res = restTemplate.getForObject(url,String.class);
-        return res;
+        return restTemplate.getForObject(url,String.class);
+    }
+
+    @PostMapping(
+            value = "/addmovie",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            headers = {"content-type=application/json"}
+    )
+    public void addMovie(@RequestBody Movies movies, HttpServletRequest request){
+        movieService.newMovie(movies,request);
+        System.out.println("DONE");
     }
 
     /*
@@ -79,7 +86,77 @@ public class tmdb {
     * */
 
     @PostMapping(
-            value = "/moviecrew",
+            value = "/searchAll",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            headers = {"content-type=application/json"}
+    )
+    public String SearchAll(@RequestBody String movieName) {
+        JsonObject obj = new Gson().fromJson(movieName, JsonObject.class);
+        String mName = obj.get("movieName").getAsString();
+        String url1 ="https://imdb-api.com/en/API/Search/%s/%s";
+        String url = String.format(url1,apiKey,mName);
+        return restTemplate.getForObject(url,String.class);
+    }
+
+    @PostMapping(
+            value = "/searchMovie",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            headers = {"content-type=application/json"}
+    )
+    public String SearchMovie(@RequestBody String movieName) {
+        JsonObject obj = new Gson().fromJson(movieName, JsonObject.class);
+        String mName = obj.get("movieName").getAsString();
+        String url1 ="https://imdb-api.com/en/API/SearchMovie/%s/%s";
+        String url = String.format(url1,apiKey,mName);
+        return restTemplate.getForObject(url,String.class);
+    }
+
+    @PostMapping(
+            value = "/searchTv",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            headers = {"content-type=application/json"}
+    )
+    public String SearchTv(@RequestBody String movieName) {
+        JsonObject obj = new Gson().fromJson(movieName, JsonObject.class);
+        String mName = obj.get("movieName").getAsString();
+        String url1 ="https://imdb-api.com/en/API/SearchSeries/%s/%s";
+        String url = String.format(url1,apiKey,mName);
+        return restTemplate.getForObject(url,String.class);
+    }
+
+    @PostMapping(
+            value = "/searchName",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            headers = {"content-type=application/json"}
+    )
+    public String SearchName(@RequestBody String movieName) {
+        JsonObject obj = new Gson().fromJson(movieName, JsonObject.class);
+        String mName = obj.get("movieName").getAsString();
+        String url1 ="https://imdb-api.com/en/API/SearchName/%s/%s";
+        String url = String.format(url1,apiKey,mName);
+        return restTemplate.getForObject(url,String.class);
+    }
+
+    @PostMapping(
+            value = "/searchCompany",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            headers = {"content-type=application/json"}
+    )
+    public String SearchCompany(@RequestBody String movieName) {
+        JsonObject obj = new Gson().fromJson(movieName, JsonObject.class);
+        String mName = obj.get("movieName").getAsString();
+        String url1 ="https://imdb-api.com/en/API/SearchCompany/%s/%s";
+        String url = String.format(url1,apiKey,mName);
+        return restTemplate.getForObject(url,String.class);
+    }
+
+    @PostMapping(
+            value = "/movieCrew",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             headers = {"content-type=application/json"}
@@ -87,15 +164,28 @@ public class tmdb {
     public String MovieCrew(@RequestBody String movieId) {
         JsonObject obj = new Gson().fromJson(movieId, JsonObject.class);
         String mName = obj.get("movieId").getAsString();
-        System.out.println(mName);
-        String url1 ="https://api.themoviedb.org/3/movie/%s/credits?api_key=%s";
-        String url = String.format(url1,mName, apiKey);
-        String res = restTemplate.getForObject(url,String.class);
-        return res;
+        String url1 ="https://imdb-api.com/en/API/FullCast/%s/%s";
+        String url = String.format(url1,apiKey,mName);
+        return restTemplate.getForObject(url,String.class);
     }
 
     @PostMapping(
-            value = "/movieimages",
+            value = "/moviePosters",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            headers = {"content-type=application/json"}
+    )
+    public String MoviePosters(@RequestBody String movieId) {
+        JsonObject obj = new Gson().fromJson(movieId, JsonObject.class);
+        String mName = obj.get("movieId").getAsString();
+        System.out.println(mName);
+        String url1 ="https://imdb-api.com/en/API/Posters/%s/%s";
+        String url = String.format(url1,apiKey,mName);
+        return restTemplate.getForObject(url,String.class);
+    }
+
+    @PostMapping(
+            value = "/movieImages",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             headers = {"content-type=application/json"}
@@ -104,14 +194,13 @@ public class tmdb {
         JsonObject obj = new Gson().fromJson(movieId, JsonObject.class);
         String mName = obj.get("movieId").getAsString();
         System.out.println(mName);
-        String url1 ="https://api.themoviedb.org/3/movie/%s/images?api_key=%s";
-        String url = String.format(url1,mName, apiKey);
-        String res = restTemplate.getForObject(url,String.class);
-        return res;
+        String url1 ="https://imdb-api.com/en/API/Images/%s/%s";
+        String url = String.format(url1,apiKey,mName);
+        return restTemplate.getForObject(url,String.class);
     }
 
     @PostMapping(
-            value = "/moviemedia",
+            value = "/movieMedia",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             headers = {"content-type=application/json"}
@@ -120,14 +209,43 @@ public class tmdb {
         JsonObject obj = new Gson().fromJson(movieId, JsonObject.class);
         String mName = obj.get("movieId").getAsString();
         System.out.println(mName);
-        String url1 ="https://api.themoviedb.org/3/movie/%s/videos?api_key=%s";
-        String url = String.format(url1,mName, apiKey);
-        String res = restTemplate.getForObject(url,String.class);
-        return res;
+        String url1 ="https://imdb-api.com/en/API/Trailer/%s/%s";
+        String url = String.format(url1,apiKey,mName);
+        return restTemplate.getForObject(url,String.class);
     }
 
     @PostMapping(
-            value = "/moviereviews",
+            value = "/movieRatings",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            headers = {"content-type=application/json"}
+    )
+    public String MovieRatings(@RequestBody String movieId) {
+        JsonObject obj = new Gson().fromJson(movieId, JsonObject.class);
+        String mName = obj.get("movieId").getAsString();
+        System.out.println(mName);
+        String url1 ="https://imdb-api.com/en/API/Ratings/%s/%s";
+        String url = String.format(url1,apiKey,mName);
+        return restTemplate.getForObject(url,String.class);
+    }
+
+    @PostMapping(
+            value = "/movieUserRatings",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            headers = {"content-type=application/json"}
+    )
+    public String MovieUserRatings(@RequestBody String movieId) {
+        JsonObject obj = new Gson().fromJson(movieId, JsonObject.class);
+        String mName = obj.get("movieId").getAsString();
+        System.out.println(mName);
+        String url1 ="https://imdb-api.com/en/API/UserRatings/%s/%s";
+        String url = String.format(url1,apiKey,mName);
+        return restTemplate.getForObject(url,String.class);
+    }
+
+    @PostMapping(
+            value = "/movieReviews",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             headers = {"content-type=application/json"}
@@ -136,60 +254,56 @@ public class tmdb {
         JsonObject obj = new Gson().fromJson(movieId, JsonObject.class);
         String mName = obj.get("movieId").getAsString();
         System.out.println(mName);
-        String url1 ="https://api.themoviedb.org/3/movie/%s/reviews?api_key=%s";
-        String url = String.format(url1,mName, apiKey);
-        String res = restTemplate.getForObject(url,String.class);
-        return res;
+        String url1 ="https://imdb-api.com/en/API/Reviews/%s/%s";
+        String url = String.format(url1,apiKey,mName);
+        return restTemplate.getForObject(url,String.class);
     }
 
     @PostMapping(
-            value = "/movieproviders",
+            value = "/movieAwards",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             headers = {"content-type=application/json"}
     )
-    public String MovieProviders(@RequestBody String movieId) {
+    public String MovieAwards(@RequestBody String movieId) {
         JsonObject obj = new Gson().fromJson(movieId, JsonObject.class);
         String mName = obj.get("movieId").getAsString();
         System.out.println(mName);
-        String url1 ="https://api.themoviedb.org/3/movie/%s/watch/providers?api_key=%s";
-        String url = String.format(url1,mName, apiKey);
-        String res = restTemplate.getForObject(url,String.class);
-        return res;
+        String url1 ="https://imdb-api.com/en/API/Awards/%s/%s";
+        String url = String.format(url1,apiKey,mName);
+        return restTemplate.getForObject(url,String.class);
     }
 
-
     @PostMapping(
-            value = "/movieextids",
+            value = "/movieExt",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             headers = {"content-type=application/json"}
     )
-    public String MovieExtIds(@RequestBody String movieId) {
+    public String MovieExt(@RequestBody String movieId) {
         JsonObject obj = new Gson().fromJson(movieId, JsonObject.class);
         String mName = obj.get("movieId").getAsString();
         System.out.println(mName);
-        String url1 ="https://api.themoviedb.org/3/movie/%s/external_ids?api_key=%s";
-        String url = String.format(url1,mName, apiKey);
-        String res = restTemplate.getForObject(url,String.class);
-        return res;
+        String url1 ="https://imdb-api.com/en/API/ExternalSites/%s/%s";
+        String url = String.format(url1,apiKey,mName);
+        return restTemplate.getForObject(url,String.class);
     }
 
     @PostMapping(
-            value = "/movierecom",
+            value = "/movieWiki",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             headers = {"content-type=application/json"}
     )
-    public String MovieRecommendation(@RequestBody String movieId) {
+    public String MovieWiki(@RequestBody String movieId) {
         JsonObject obj = new Gson().fromJson(movieId, JsonObject.class);
         String mName = obj.get("movieId").getAsString();
         System.out.println(mName);
-        String url1 ="https://api.themoviedb.org/3/movie/%s/recommendations?api_key=%s";
-        String url = String.format(url1,mName, apiKey);
-        String res = restTemplate.getForObject(url,String.class);
-        return res;
+        String url1 ="https://imdb-api.com/en/API/Wikipedia/%s/%s";
+        String url = String.format(url1,apiKey,mName);
+        return restTemplate.getForObject(url,String.class);
     }
+
 
     @PostMapping(
             value = "/movielist",

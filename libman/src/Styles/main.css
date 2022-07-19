@@ -79,7 +79,7 @@ body{
     color: #fe5f55;
 }
 .card_img{
-    aspect-ratio: 1/1 !important;
+    aspect-ratio: 2/3 !important;
     border-radius: 0.3rem !important;
 }
 .card_body{
@@ -118,6 +118,9 @@ body{
 }
 .card_body .card_icon1{
     margin-right: 0.4rem !important;
+}
+.card_body1{
+    flex: 1 0 50% !important;
 }
 .card_body .cart_btn,.card_body1 .cart_btn{
     border: 1px solid #fe5f55 !important;
@@ -258,6 +261,7 @@ sup{
     /* width: 50% !important;
     height: 50% !important; */
     /* aspect-ratio: 16/9 !important; */
+    flex: 0 0 20% !important;
 }
 .about_book_header{
     letter-spacing: 0.1rem !important;

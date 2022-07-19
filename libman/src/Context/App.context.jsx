@@ -9,39 +9,89 @@ export const AppContext = ({children}) => {
   const [popularMoviePages,setPopularMoviePages] = useState(0)
   const [currPage,setCurrPage] = useState("0")
 
-  const fetchPopularMovies = async() => {
-    await axios.post("http://localhost:8080/movie/popular",{
-      "pageNo": String(parseInt(currPage)+1)
+  /* 
+    Single Movie Starts
+  */
+  const [movieData,setMovieData]=useState({})
+
+  const fetchSingleMovieSearch = async(mId) => {
+    await axios.post("http://localhost:8080/api/movie/searchAll",{
+      movieName : mId
+    }).then((data)=>{
+        setMovieData({
+          title:data.data.results[0].title,
+          image:data.data.results[0].image,
+          year:data.data.results[0].description
+        })
+    }).catch((e) => {
+      console.log(e)
     })
+  }
+  /*
+    Single Movie Ends  
+  */
+
+  const fetchPopularMovies = async() => {
+    await axios.get("http://localhost:8080/api/movie/popular")
     .then((data)=>{
-      setPopularMovies(data.data.results)
-      setPopularMoviePages(Math.round((data.data.total_pages)/100))
+      setPopularMovies(data.data.items)
+      setPopularMoviePages(data.data.items.length)
     }).catch((e) => {
       console.log(e)
     })
   }
 
-  const ChangeCurrPage = (page) => {
-    setCurrPage(String(page))
+  const fetchTopRatedMovies = async() => {
+    await axios.get("http://localhost:8080/api/movie/toprated")
+    .then((data)=>{
+      setPopularMovies(data.data.items)
+      setPopularMoviePages(data.data.items.length)
+    }).catch((e) => {
+      console.log(e)
+    })
   }
 
-  useEffect(()=>{ 
-    fetchPopularMovies()
-  },[])
-  useEffect(()=>{
-    fetchPopularMovies()
-  },[currPage])
+  const fetchUpcomingMovies = async() => {
+    await axios.get("http://localhost:8080/api/movie/upcoming")
+    .then((data)=>{
+      setPopularMovies(data.data.items)
+      setPopularMoviePages(data.data.items.length)
+    }).catch((e) => {
+      console.log(e)
+    })
+  }
+
+  const fetchNowPlayingMovies = async() => {
+    await axios.get("http://localhost:8080/api/movie/nowplaying")
+    .then((data)=>{
+      setPopularMovies(data.data.items)
+      setPopularMoviePages(data.data.items.length)
+    }).catch((e) => {
+      console.log(e)
+    })
+  }
+
+  const CurrPage = () => {
+    setCurrPage(1)
+  }
 
   return (
     <BookContext.Provider value={{
       isLoggedIn : true,
 
       // All Movies
-      popular : popularMovies,
+      movies : popularMovies,
       popularPages : popularMoviePages,
-      popularPageChange : fetchPopularMovies,
-      ChangeCurrPage : ChangeCurrPage
+      ChangeCurrPage : CurrPage,
+
+      fetchPopularMovies : fetchPopularMovies,
+      fetchTopRatedMovies : fetchTopRatedMovies,
+      fetchUpcomingMovies : fetchUpcomingMovies,
+      fetchNowPlayingMovies : fetchNowPlayingMovies,
       // End All Movies
+
+      fetchSingleMovieSearch : fetchSingleMovieSearch,
+      movieData : movieData
     }}>
         {children}
     </BookContext.Provider>
