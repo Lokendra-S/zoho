@@ -3,33 +3,28 @@ import ReactPaginate from 'react-paginate'
 import { IconContext } from 'react-icons'
 import { GrNext, GrPrevious } from 'react-icons/gr'
 
-import json_data from '../Pagination/MOCK_DATA.json'
 import { useContext } from 'react'
 import { BookContext } from '../../Context/App.context'
-import Cards from './Card'
 import { Container, Row } from 'react-bootstrap'
-import { useLocation } from 'react-router-dom'
+import Reviews from './Reviews'
 
-function Pagination(loc) {
+function ReviewPag() {
 
-    const { movies,popularPages,ChangeCurrPage } = useContext(BookContext)
+    const { movieReviews,movieReviewsPage } = useContext(BookContext)
     
-    const [ users, setUsers ] = useState(popularPages)
+    const [ users, setUsers ] = useState(movieReviews)
     const [ pageNumber, setPageNumber ] = useState(0)
     
-    useEffect(()=>{
-        setPageNumber(0)
-    },[loc])
-    const userPerPage = 24
+    const userPerPage = 5
     const pagesVisited = pageNumber * userPerPage
 
-    const displayUsers = movies
+    const displayUsers = movieReviews
     .slice(pagesVisited, pagesVisited+userPerPage)
     .map((e) => {
-        return <Cards k={e.id} data={e} />
+        return <Reviews e={e} id={e.id} />
     })
 
-    const pageCount = Math.ceil(popularPages/userPerPage)
+    const pageCount = Math.ceil(movieReviewsPage/userPerPage)
     const changePage = ({ selected=0 }) => {
         setPageNumber(selected)
     }
@@ -63,11 +58,11 @@ function Pagination(loc) {
             nextLinkClassName = {"nextBtn d-flex justify-content-center align-items-center px-3 py-2"}
             disabledClassName = {"paginationDisabled"}
             activeClassName = {"paginationActive"}
-            forcePage = {pageNumber&&pageNumber}
+            forcePage = {pageNumber}
         />
     </div>
     </>
   )
 }
 
-export default Pagination
+export default ReviewPag

@@ -261,16 +261,82 @@ sup{
     /* width: 50% !important;
     height: 50% !important; */
     /* aspect-ratio: 16/9 !important; */
-    flex: 0 0 20% !important;
+    flex: 0 0 30% !important;
+}
+.single_book_text{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 7;
+    overflow: hidden;
 }
 .about_book_header{
     letter-spacing: 0.1rem !important;
 }
-.about_content{
+.about_content,.opLow{
     opacity: 0.7 !important;
 }
+.opHigh{
+    font-weight: 600 !important;
+}
 .single_book_img{
-    aspect-ratio: 3/2 !important;
+    aspect-ratio: 2/3 !important;
+}
+.card-body .actors,.moviePosters{
+    overflow-x: scroll;
+    justify-content: start;
+}
+.actor_image,.review_user{
+    max-height: 100px !important;
+    height: 100px !important;
+    max-width: 100px !important;
+    width: 100px !important;
+    aspect-ratio: 1/1 !important;
+    border-radius: 50% !important;
+}
+.twoLineCast{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.twoLineCastSub{
+    font-size: 1.6vh !important;
+    opacity: 0.7 !important;
+}
+.review_user{
+    max-height: 80px !important;
+    max-width: 80px !important;
+}
+.review_text{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+.mainHeaderPosters{
+    flex: 0 0 20% !important;
+}
+.poster{
+    width: 100% !important;
+    height: 100% !important;
+}
+.tab-content{
+    width: 100% !important;
+}
+.mainHeaderVideo{
+    width: auto !important;
+    height: 50vh !important;
+    flex: 0 0 100% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mainHeaderVideo > iframe{
+    width: 100% !important;
+    height: 100% !important;
+}
+.single_book_text1{
+    -webkit-line-clamp: 11;
 }
 /*---------------------------   SINGLE BOOK       ---------------------------------------*/
 

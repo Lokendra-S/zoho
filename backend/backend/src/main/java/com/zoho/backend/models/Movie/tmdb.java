@@ -199,6 +199,7 @@ public class tmdb {
         return restTemplate.getForObject(url,String.class);
     }
 
+    @CrossOrigin
     @PostMapping(
             value = "/movieMedia",
             produces = MediaType.APPLICATION_JSON_VALUE,
@@ -284,7 +285,7 @@ public class tmdb {
         JsonObject obj = new Gson().fromJson(movieId, JsonObject.class);
         String mName = obj.get("movieId").getAsString();
         System.out.println(mName);
-        String url1 ="https://imdb-api.com/en/API/ExternalSites/%s/%s";
+        String url1 ="https://imdb-api.com/en/API/ExternalSites/%s/%s"; 
         String url = String.format(url1,apiKey,mName);
         return restTemplate.getForObject(url,String.class);
     }
