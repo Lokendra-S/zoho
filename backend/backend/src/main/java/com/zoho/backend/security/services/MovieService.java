@@ -29,11 +29,11 @@ public class MovieService {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-//        User user = userRepository.findByUsername(username)
-//                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-//        System.out.println(user);
-//        System.out.println("LOADING");
-//        movies.setUser(user);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+        System.out.println(user);
+        System.out.println("LOADING");
+        movies.setUser(user);
         movieRepository.save(movies);
         System.out.println("DONE LOAD");
     }
