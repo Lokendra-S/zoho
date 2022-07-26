@@ -5,25 +5,18 @@ import javax.persistence.*;
 @Entity
 @Table(name = "movies")
 public class Movies {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @Column(name = "movieId")
+    @Column(name = "movie_id",unique = true)
     private String movieId;
-
     @Column(name = "status")
     private String status;
-
-    @Column(name = "buyStatus")
+    @Column(name = "buy_status")
     private int bought;
-
     @ManyToOne
-    //Adding the name
     @JoinColumn(name = "user_id")
     User user;
-
     public Movies() {
     }
 

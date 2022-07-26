@@ -10,7 +10,13 @@ import {
 
 import Icon from './Icon';
 
-function Login({handleShow,handleClose,show}) {
+function Login({
+        handleShow,
+        userLogin,
+        handleClose,
+        show,
+        isLoggedIn
+    }) {
     const [key, setKey] = useState('Login');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
@@ -37,7 +43,12 @@ function Login({handleShow,handleClose,show}) {
                 setErr('Please Enter Password')
             }else{
                 setErr(null)
-                console.log(email,password)
+                userLogin(email,password)
+                setEmail('')
+                setPassword('')
+                if(isLoggedIn){
+                    handleClose()
+                }
             }
         }
         if (key === "Signup"){
@@ -52,6 +63,9 @@ function Login({handleShow,handleClose,show}) {
                 setErr('Please Confirm Password')
             }else{
                 setErr(null)
+                setEmail('')
+                setPassword('')
+                setCpassword('')
                 console.log(email,password,cPassword)
             }
         }
@@ -89,11 +103,11 @@ function Login({handleShow,handleClose,show}) {
                                 </Container>
                                 <Form className='w-100'>
                                     <Form.Group className="mb-3" controlId="">
-                                        <Form.Label>Email address</Form.Label>
+                                        <Form.Label>Username</Form.Label>
                                         <Form.Control 
-                                            type="email" 
+                                            type="text" 
                                             className='shadow-none' 
-                                            placeholder="Enter email"
+                                            placeholder="Enter Username"
                                             value={email}
                                             onChange={(e)=>{setEmail(e.target.value)}} 
                                             onFocus={() => setErr(null)}

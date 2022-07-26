@@ -5,6 +5,12 @@ export const BookContext = createContext()
 
 export const AppContext = ({children}) => {
 
+  /*
+    User
+  */
+  const [isLoggedIn,setIsLoggedIn] = useState(true)
+  const [userMovies,setUserMovies] = useState([])
+
   const [popularMovies,setPopularMovies] = useState([])
   const [popularMoviePages,setPopularMoviePages] = useState(0)
   const [currPage,setCurrPage] = useState("0")
@@ -156,9 +162,98 @@ export const AppContext = ({children}) => {
     setCurrPage(1)
   }
 
+  const userLogin = async(username, password) => {
+    await axios.post("http://localhost:8080/api/auth/signin",{
+      username : username,
+      password : password
+    },{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        setIsLoggedIn(false)
+        console.log(data)
+      }
+    }).catch(e => {
+      alert(e.message())
+    })
+  }
+
+  const userLogOut = async() => {
+    await axios.post("http://localhost:8080/api/auth/signout",{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        setIsLoggedIn(true)
+        const ck = document.cookie.split(";").filter(e => e.startsWith("loki="))
+        document.cookie = ck+";max-age=0";
+        console.log(data)
+      }
+    }).catch(e => {
+      alert(e.message())
+    })
+  }
+
+  const addMovie = async(movieId,status) => {
+    await axios.post("http://localhost:8080/api/user/addmovie",{
+      movieId : movieId,
+      status : status,
+      bought : 0
+    },{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        console.log(data)
+      }
+    }).catch(e => {
+      alert("Error occured while performing query kindly try again later.")
+    })
+  }
+
+  const allMovies = async() => {
+    await axios.get("http://localhost:8080/api/user/allMovies",{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        setPopularMovies(data.data)
+      }
+    }).catch(e => {
+      alert("Error occured while performing query kindly try again later.")
+    })
+  }
+
+  const getToken = () => {
+    if(document.cookie.split(';').find(row => row.startsWith('loki='))){
+      setIsLoggedIn(false)
+    }
+  }
+
+  useEffect(()=>{
+    getToken()
+  },[])
+
   return (
     <BookContext.Provider value={{
-      isLoggedIn : true,
+      isLoggedIn : isLoggedIn,
 
       // All Movies
       movies : popularMovies,
@@ -187,9 +282,15 @@ export const AppContext = ({children}) => {
       ratings : ratings,
       posters : posters,
       images : images,
-      videos : videos
+      videos : videos,
+
+      //auth
+      userLogin : userLogin,
+      userLogOut : userLogOut,
+      addMovie : addMovie,
+      allMovies : allMovies
     }}>
-        {children}
+      {children}
     </BookContext.Provider>
   )
 }

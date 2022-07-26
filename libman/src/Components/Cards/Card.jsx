@@ -6,8 +6,9 @@ import {
     Card,
 
 } from 'react-bootstrap'
-import { BsCartPlus,BsStarFill,BsStarHalf,BsStar } from 'react-icons/bs'
+import { BsCartPlus,BsStarFill,BsStarHalf,BsStar,BsFillPlayCircleFill } from 'react-icons/bs'
 import { IoWalletOutline,IoHeartOutline } from 'react-icons/io5'
+import { MdPlaylistAdd } from 'react-icons/md'
 // import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import { IconContext } from 'react-icons'
 
@@ -18,27 +19,51 @@ import { useNavigate } from 'react-router-dom'
 
 function Cards({k,data}) {
     const navigate = useNavigate()
-    const { isLoggedIn } = useContext(BookContext)
+    const { 
+        isLoggedIn,
+        userLogin,
+        addMovie
+    } = useContext(BookContext)
     const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = (id,status) => {
+        setShow(false);
+        addMovie(id,status)
+    }
+    const handleShow = () => {
+        setShow(true);
+        
+    }
 
-    const handleClick = () => {
+    const handleClick = (id,status) => {
         if (isLoggedIn){
             handleShow()
         }else{
-            console.log("YES")
+            handleClose(id,status)
         }
     }
+
+    const mdRating = data.imDbRating ? data.imDbRating : "0"
+    const roundM = Math.floor(mdRating)/2
+    const r = []
+    for (let i = 1; i < 6; i++) {
+        if (i <= roundM){
+            r.push(i)
+        }
+        else{
+            r.push(-i)
+        }
+    }
+    
 
     return (
         <>
             <Col key={k} xs={12} sm={6} md={6} lg={4} xl={4} xxl={3} className="mb-3"
-                onClick={()=>navigate(`/movie/${data.id}`)}
             >
                 <Card className='w-100 border-0 card_parent text-center p-3 shadow'>
-                    <Container fluid className='card_img_container'>
+                    <Container fluid className='card_img_container'
+                        onClick={()=>navigate(`/movie/${data.id}`)}
+                    >
                         <Card.Img variant="top" className='card_img' src={data.image} />
                         <Button className='heart_btn shadow'>
                             <IconContext.Provider value = {{className:"heart_icon"}}>
@@ -63,41 +88,52 @@ function Cards({k,data}) {
                             {data.plot ? data.plot : `Current Rank : ${data.rank}`}
                         </Card.Text>
                         <Container fluid className='rating_book my-1'>
-                            { [1,2,3].map(e => {
-                                return(
-                                    <IconContext.Provider key={e} value = {{className:"star rating_star_fill me-1"}}>
-                                        <BsStarFill/> 
-                                    </IconContext.Provider>
-                                )
+                            { r.map(e => {
+                                if (e < 0){
+                                    return(
+                                        <IconContext.Provider key={e} value = {{className:"star rating_star_no_fill me-1"}}>
+                                            <BsStar/> 
+                                        </IconContext.Provider>
+                                    )
+                                }else{
+                                    return(
+                                        <IconContext.Provider key={e} value = {{className:"star rating_star_fill me-1"}}>
+                                            <BsStarFill/> 
+                                        </IconContext.Provider>
+                                    )
+                                }
                                 })
                             }
-                            <IconContext.Provider value = {{className:"star rating_star_half_fill me-1"}}>
+                            {/* <IconContext.Provider value = {{className:"star rating_star_half_fill me-1"}}>
                                 <BsStarHalf/> 
-                            </IconContext.Provider>
-                            <IconContext.Provider value = {{className:"star rating_star_no_fill me-1"}}>
-                                <BsStar/> 
-                            </IconContext.Provider>
+                            </IconContext.Provider> */}
                         </Container>
                         <Card.Text className='book_release'>
                             { data.releaseState ? `Release On : ${data.releaseState}` : `Released on : ${data.year}`}
                         </Card.Text>
                         <Container fluid className='d-flex gap-3 justify-content-center'>
-                            <Button variant="danger" onClick={handleClick} className='cart_btn shadow-none'>
+                            <Button variant="danger" onClick={()=>handleClick(data.id,"watchlist")} className='cart_btn shadow-none'>
                                 <IconContext.Provider value = {{className:"card_icon"}}>
-                                    <BsCartPlus />
+                                    <MdPlaylistAdd />
                                 </IconContext.Provider>
                             </Button>
                             <Button variant="dark" className='fs-6 buy_btn shadow-none d-flex justify-content-center align-items-center text-uppercase'>
                                 <IconContext.Provider value = {{className:"card_icon1"}}>
-                                    <IoWalletOutline/> 
+                                    <BsFillPlayCircleFill/> 
                                 </IconContext.Provider>
-                                <p className='mb-0 buy_text'>buy now</p>
+                                <p className='mb-0 buy_text'>Play It</p>
                             </Button>
                         </Container>
                     </Card.Body>
                 </Card>
             </Col>
-            <Login show={show} handleShow={handleShow} handleClose={handleClose} />
+            <Login 
+                show={show} 
+                isLoggedIn={isLoggedIn} 
+                handleShow={handleShow} 
+                userLogin={userLogin} 
+                handleClose={handleClose} 
+            />
         </>
     )
 }

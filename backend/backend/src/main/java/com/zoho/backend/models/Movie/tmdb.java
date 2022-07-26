@@ -70,17 +70,6 @@ public class tmdb {
         return restTemplate.getForObject(url,String.class);
     }
 
-    @PostMapping(
-            value = "/addmovie",
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            headers = {"content-type=application/json"}
-    )
-    public void addMovie(@RequestBody Movies movies, HttpServletRequest request){
-        movieService.newMovie(movies,request);
-        System.out.println("DONE");
-    }
-
     /*
     * Single Movie Details Start
     * */

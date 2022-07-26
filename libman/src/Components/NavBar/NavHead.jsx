@@ -17,7 +17,10 @@ import { AiOutlineAppstoreAdd } from 'react-icons/ai'
 import { NavLink } from 'react-router-dom'
 
 
-function NavHead({width}) {
+function NavHead({
+        width,
+        userLogOut
+    }) {
 
   return (
     <Container fluid className='px-5 mb-3 mt-4 header_container'>
@@ -85,7 +88,9 @@ function NavHead({width}) {
                                         Favourites
                                     </NavLink>
                                 </Dropdown.Item>
-                                <Dropdown.Item className='mt-2 px-3 d-flex justify-content-start align-items-center text-center text-uppercase w-100 logout_btn'>
+                                <Dropdown.Item className='mt-2 px-3 d-flex justify-content-start align-items-center text-center text-uppercase w-100 logout_btn'
+                                    onClick={() => userLogOut()}
+                                >
                                     <IconContext.Provider value = {{className:"log_out_icon me-2 my-auto"}}>
                                         <MdLogout /> 
                                     </IconContext.Provider>

@@ -19,13 +19,13 @@ import io.jsonwebtoken.*;
 public class JwtUtils {
   private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-  @Value("${bezkoder1.app.jwtSecret}")
+  @Value("${zoho.app.jwtSecret}")
   private String jwtSecret;
 
-  @Value("${bezkoder1.app.jwtExpirationMs}")
+  @Value("${zoho.app.jwtExpirationMs}")
   private int jwtExpirationMs;
 
-  @Value("${bezkoder1.app.jwtCookieName}")
+  @Value("${zoho.app.jwtCookieName}")
   private String jwtCookie;
 
   public String getJwtFromCookies(HttpServletRequest request) {
@@ -39,12 +39,12 @@ public class JwtUtils {
 
   public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
     String jwt = generateTokenFromUsername(userPrincipal.getUsername());
-    ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(24 * 60 * 60 *60).httpOnly(false).build();
+    ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/").maxAge(24 * 60 * 60 *60).httpOnly(false).build();
     return cookie;
   }
 
   public ResponseCookie getCleanJwtCookie() {
-    ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/api").build();
+    ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/").build();
     return cookie;
   }
 

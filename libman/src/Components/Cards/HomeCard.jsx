@@ -19,8 +19,14 @@ import Pagination from './Pagination'
 function HomeCard({width}) {
     const location = useLocation();
     const loc = location.pathname;
-    const { ChangeCurrPage,fetchTopRatedMovies,fetchPopularMovies,fetchNowPlayingMovies
-        ,fetchUpcomingMovies } = useContext(BookContext)
+    const { 
+        ChangeCurrPage,
+        fetchTopRatedMovies,
+        fetchPopularMovies,
+        fetchNowPlayingMovies,
+        fetchUpcomingMovies,
+        allMovies
+    } = useContext(BookContext)
 
     useEffect(()=>{
         if(loc==="/toprated"){
@@ -30,7 +36,10 @@ function HomeCard({width}) {
         }
         else if(loc==="/nowplaying"){
             fetchNowPlayingMovies()
-        }else{
+        }else if(loc === "/profile"){
+            allMovies()
+        }
+        else{
             fetchPopularMovies()
         }
     },[loc])
@@ -38,7 +47,7 @@ function HomeCard({width}) {
   return (
     <Container fluid className='mt-2'>
         <Container fluid className='px-5 d-flex align-items-center justify-content-between book_head'>
-            <h1 className='fs-3 fw-bold text-center text-uppercase book_headline'>books</h1>
+            <h1 className='fs-3 fw-bold text-center text-uppercase book_headline'>Movies</h1>
             <Dropdown>
                 <Dropdown.Toggle variant="dark" className='shadow-none' id="dropdown-basic">
                     Sort By

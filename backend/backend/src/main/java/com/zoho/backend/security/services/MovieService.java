@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -25,17 +26,18 @@ public class MovieService {
     @Autowired
     UserRepository userRepository;
 
-    public void newMovie(Movies movies, HttpServletRequest request) {
+    public void newMovie(Movies movies) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-        System.out.println(user);
-        System.out.println("LOADING");
         movies.setUser(user);
         movieRepository.save(movies);
-        System.out.println("DONE LOAD");
+    }
+
+    public List<Movies> getAllMovies(){
+        return movieRepository.findAll();
     }
 
 }

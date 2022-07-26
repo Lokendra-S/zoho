@@ -12,7 +12,7 @@ import { useLocation } from 'react-router-dom'
 
 function Pagination(loc) {
 
-    const { movies,popularPages,ChangeCurrPage } = useContext(BookContext)
+    const { movies,popularPages,ChangeCurrPage,addMovie } = useContext(BookContext)
     
     const [ users, setUsers ] = useState(popularPages)
     const [ pageNumber, setPageNumber ] = useState(0)
@@ -26,7 +26,12 @@ function Pagination(loc) {
     const displayUsers = movies
     .slice(pagesVisited, pagesVisited+userPerPage)
     .map((e) => {
-        return <Cards k={e.id} data={e} />
+        return( 
+        <Cards 
+            k={e.id} 
+            data={e} 
+            addMovie={addMovie}
+        />)
     })
 
     const pageCount = Math.ceil(popularPages/userPerPage)
