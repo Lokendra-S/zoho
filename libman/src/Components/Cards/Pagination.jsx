@@ -10,28 +10,31 @@ import Cards from './Card'
 import { Container, Row } from 'react-bootstrap'
 import { useLocation } from 'react-router-dom'
 
-function Pagination(loc) {
+function Pagination({loc,data1}) {
 
-    const { movies,popularPages,ChangeCurrPage,addMovie } = useContext(BookContext)
-    
+    const { movies,userMovies,popularPages,ChangeCurrPage,addMovie,fetchSingleMovieSearch,movieData,allMovies,searchData } = useContext(BookContext)
+
     const [ users, setUsers ] = useState(popularPages)
     const [ pageNumber, setPageNumber ] = useState(0)
-    
+
     useEffect(()=>{
         setPageNumber(0)
     },[loc])
     const userPerPage = 24
     const pagesVisited = pageNumber * userPerPage
+    
+    const renderer = loc === "/profile" ? userMovies : loc.pathname==="/search/s" ? searchData : movies
 
-    const displayUsers = movies
+    const displayUsers = renderer
     .slice(pagesVisited, pagesVisited+userPerPage)
-    .map((e) => {
+    .map((e,id) => {
         return( 
-        <Cards 
-            k={e.id} 
-            data={e} 
-            addMovie={addMovie}
-        />)
+            <Cards 
+                k={e.id} 
+                data={e}
+                s = { loc === "/profile" ? "u" : "m" }
+            />
+        )
     })
 
     const pageCount = Math.ceil(popularPages/userPerPage)

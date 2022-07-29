@@ -15,10 +15,16 @@ export const AppContext = ({children}) => {
   const [popularMoviePages,setPopularMoviePages] = useState(0)
   const [currPage,setCurrPage] = useState("0")
 
+  // useEffect(() => {
+
+  // }, [])
+  
+
   /* 
     Single Movie Starts
   */
   const [movieData,setMovieData]=useState('')
+  const [searchData,setSearchData]=useState([{}])
   const [movieDesc,setMovieDesc]=useState('')
   const [movieReviews,setMovieReviews]=useState([])
   const [movieReviewsPage,setMovieReviewsPage]=useState(0)
@@ -28,6 +34,15 @@ export const AppContext = ({children}) => {
   const [images,setImages] = useState([])
   const [videos,setVideos] = useState([])
 
+  const fetchMovieSearch = async(mId) => {
+    await axios.post("http://localhost:8080/api/movie/searchMovie",{
+      movieName : mId
+    }).then((data)=>{
+        setSearchData(data.data.results)
+    }).catch((e) => {
+      console.log(e)
+    })
+  }
 
   const fetchSingleMovieSearch = async(mId) => {
     await axios.post("http://localhost:8080/api/movie/searchMovie",{
@@ -179,7 +194,7 @@ export const AppContext = ({children}) => {
         console.log(data)
       }
     }).catch(e => {
-      alert(e.message())
+      alert(e.message)
     })
   }
 
@@ -203,11 +218,30 @@ export const AppContext = ({children}) => {
     })
   }
 
-  const addMovie = async(movieId,status) => {
+  const addMovie = async(
+      movieId,
+      movieImgId,
+      movieTitle,
+      movieDirector,
+      movieReleased,
+      movieRating,
+      watchlist,
+      favourite,
+      playing,
+      bought
+    ) => {
     await axios.post("http://localhost:8080/api/user/addmovie",{
-      movieId : movieId,
-      status : status,
-      bought : 0
+      id : movieId,
+      movieImgId : movieImgId,
+      movieTitle : movieTitle,
+      movieDirector : movieDirector,
+      movieReleased : movieReleased,
+      movieRating : movieRating,
+      watchlist : watchlist,
+      favourite : favourite,
+      playing : playing,
+      bought : bought
+
     },{
       headers: {
         "Content-Type": "application/json",
@@ -224,6 +258,174 @@ export const AppContext = ({children}) => {
     })
   }
 
+  const deleteWatchMovie = async(
+    movieId
+  ) => {
+    await axios.post("http://localhost:8080/api/user/deletewatchmovie",{
+      movies : movieId
+
+    },{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        console.log(data)
+      }
+    }).catch(e => {
+      alert("Error occured while performing query kindly try again later.")
+    })
+  }
+
+  const deleteFavMovie = async(
+    movieId
+  ) => {
+    await axios.post("http://localhost:8080/api/user/deletefavmovie",{
+      movies : movieId
+
+    },{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        console.log(data)
+      }
+    }).catch(e => {
+      alert("Error occured while performing query kindly try again later.")
+    })
+  }
+
+  const deletePlayMovie = async(
+    movieId
+  ) => {
+    await axios.post("http://localhost:8080/api/user/deleteplaymovie",{
+      movies : movieId
+
+    },{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        console.log(data)
+      }
+    }).catch(e => {
+      alert("Error occured while performing query kindly try again later.")
+    })
+  }
+
+  const deleteAllMovie = async(
+    movieId
+  ) => {
+    await axios.post("http://localhost:8080/api/user/deletemovie",{
+      movies : movieId
+
+    },{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        console.log(data)
+      }
+    }).catch(e => {
+      alert("Error occured while performing query kindly try again later.")
+    })
+  }
+
+  const addFavMovie = async(
+    movieId,
+    movieImgId,
+    movieTitle,
+    movieDirector,
+    movieReleased,
+    movieRating,
+    watchlist,
+    favourite,
+    playing,
+    bought
+  ) => {
+  await axios.post("http://localhost:8080/api/user/addfavmovie",{
+    id : movieId,
+    movieImgId : movieImgId,
+    movieTitle : movieTitle,
+    movieDirector : movieDirector,
+    movieReleased : movieReleased,
+    movieRating : movieRating,
+    watchlist : watchlist,
+    favourite : favourite,
+    playing : playing,
+    bought : bought
+
+    },{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        console.log(data)
+      }
+    }).catch(e => {
+      alert("Error occured while performing query kindly try again later.")
+    })
+  }
+
+  const addPlayMovie = async(
+    movieId,
+    movieImgId,
+    movieTitle,
+    movieDirector,
+    movieReleased,
+    movieRating,
+    watchlist,
+    favourite,
+    playing,
+    bought
+  ) => {
+  await axios.post("http://localhost:8080/api/user/addplaymovie",{
+    id : movieId,
+    movieImgId : movieImgId,
+    movieTitle : movieTitle,
+    movieDirector : movieDirector,
+    movieReleased : movieReleased,
+    movieRating : movieRating,
+    watchlist : watchlist,
+    favourite : favourite,
+    playing : playing,
+    bought : bought
+
+  },{
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin" : "http://localhost:8080",
+      "Access-Control-Allow-Credentials" : true
+    },
+    withCredentials: true
+  }).then(data => {
+    if (data.status === 200){
+      console.log(data)
+    }
+  }).catch(e => {
+    alert("Error occured while performing query kindly try again later.")
+  })
+  }
+
   const allMovies = async() => {
     await axios.get("http://localhost:8080/api/user/allMovies",{
       headers: {
@@ -234,10 +436,10 @@ export const AppContext = ({children}) => {
       withCredentials: true
     }).then(data => {
       if (data.status === 200){
-        setPopularMovies(data.data)
+        setUserMovies(data.data)
       }
     }).catch(e => {
-      alert("Error occured while performing query kindly try again later.")
+      alert("Error occured while performing query kindly try again later."+e.message)
     })
   }
 
@@ -288,7 +490,18 @@ export const AppContext = ({children}) => {
       userLogin : userLogin,
       userLogOut : userLogOut,
       addMovie : addMovie,
-      allMovies : allMovies
+      allMovies : allMovies,
+      addFavMovie : addFavMovie,
+      addPlayMovie : addPlayMovie,
+      userMovies : userMovies,
+      deleteWatchMovie : deleteWatchMovie,
+      deleteFavMovie : deleteFavMovie,
+      deletePlayMovie : deletePlayMovie,
+      deleteAllMovie : deleteAllMovie,
+
+      //search
+      fetchMovieSearch : fetchMovieSearch,
+      searchData : searchData
     }}>
       {children}
     </BookContext.Provider>

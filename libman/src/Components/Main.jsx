@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import HomeCard from './Cards/HomeCard'
+import Sample from './Cards/Sample'
 import CartHome from './Cart/CartHome'
 import Footer from './Footer/Footer'
 import Header from './NavBar/Header'
@@ -41,6 +42,7 @@ function Main() {
             <Route path='/profile' element={<HomeCard width={width}/>} />
             <Route path='/:id/cart' element={<CartHome />} />
             <Route path='/movie/:movieId' element={<BookContent/>} />
+            <Route path='/search/:s' element={<Sample/>} />
           </Routes>
           <Footer/>
         </Router>

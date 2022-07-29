@@ -78,6 +78,14 @@ body{
     font-size: 1.3rem !important;
     color: #fe5f55;
 }
+.heart_active{
+    background-color: #fe5f55 !important;
+    color: #fdfffc !important;
+    border: none !important;
+}
+.heart_active .heart_icon{
+    color: #fdfffc !important;
+}
 .card_img{
     aspect-ratio: 2/3 !important;
     border-radius: 0.3rem !important;

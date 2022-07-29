@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import {
     Container,
     FormControl,
@@ -14,13 +14,22 @@ import { IconContext } from 'react-icons'
 import { MdLogout } from 'react-icons/md'
 import { BiEditAlt } from 'react-icons/bi'
 import { AiOutlineAppstoreAdd } from 'react-icons/ai'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { BookContext } from '../../Context/App.context'
 
 
 function NavHead({
         width,
         userLogOut
-    }) {
+    }
+) {
+    const navigate = useNavigate()
+    const { fetchMovieSearch } = useContext(BookContext)
+    const [ inp, setInp] = useState("")
+
+    const inpOnChange = (e) =>{
+        setInp(e.target.value)
+    }
 
   return (
     <Container fluid className='px-5 mb-3 mt-4 header_container'>
@@ -37,8 +46,15 @@ function NavHead({
                         aria-describedby="book_name"
                         type='search'
                         className="shadow-none"
+                        value = {inp}
+                        onChange = {(e) => inpOnChange(e)}
                     />
-                    <InputGroup.Text id="book_name">Search</InputGroup.Text>
+                    <InputGroup.Text id="book_name"
+                        onClick={(e) => {
+                            fetchMovieSearch(inp)
+                            navigate(`/search/s?name=${inp}`)
+                        }}
+                    >Search</InputGroup.Text>
                 </InputGroup>
             </Col>
             <Col  xs={6} sm={6} md={2} lg={3} className="d-flex justify-content-center align-items-center">

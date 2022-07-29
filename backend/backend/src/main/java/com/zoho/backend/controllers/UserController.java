@@ -1,5 +1,7 @@
 package com.zoho.backend.controllers;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.zoho.backend.models.Movies;
 import com.zoho.backend.security.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,16 @@ public class UserController {
     return "Public Content.";
   }
 
+//  @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+//  @PostMapping(
+//          value = "/checkmovie",
+//          produces = MediaType.APPLICATION_JSON_VALUE,
+//          consumes = MediaType.APPLICATION_JSON_VALUE,
+//          headers = {"content-type=application/json"}
+//  )
+//  public Boolean checkMovie(@RequestBody Movies movies){
+//    return movieService.checkMovie(movies);
+//  }
   @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
   @PostMapping(
           value = "/addmovie",
@@ -33,8 +45,85 @@ public class UserController {
           headers = {"content-type=application/json"}
   )
   public String addMovie(@RequestBody Movies movies){
-    movieService.newMovie(movies);
-    return "Success";
+    return movieService.newMovie(movies);
+  }
+
+  @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+  @PostMapping(
+          value = "/addfavmovie",
+          produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE,
+          headers = {"content-type=application/json"}
+  )
+  public String addFavMovie(@RequestBody Movies movies){
+    return movieService.newFavouriteMovie(movies);
+  }
+
+  @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+  @PostMapping(
+          value = "/addplaymovie",
+          produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE,
+          headers = {"content-type=application/json"}
+  )
+  public String addPlayMovie(@RequestBody Movies movies){
+    return movieService.newWatchingMovie(movies);
+  }
+
+  @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+  @PostMapping(
+          value = "/deletewatchmovie",
+          produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE,
+          headers = {"content-type=application/json"}
+  )
+  public String deleteWatchMovie(@RequestBody String movies){
+    JsonObject obj = new Gson().fromJson(movies, JsonObject.class);
+    String mName = obj.get("movies").getAsString();
+    Long mv = Long.parseLong(mName);
+    return movieService.deleteWatchlistMovie(mv);
+  }
+
+  @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+  @PostMapping(
+          value = "/deletefavmovie",
+          produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE,
+          headers = {"content-type=application/json"}
+  )
+  public String deleteFavMovie(@RequestBody String movies){
+    JsonObject obj = new Gson().fromJson(movies, JsonObject.class);
+    String mName = obj.get("movies").getAsString();
+    Long mv = Long.parseLong(mName);
+    return movieService.deleteFavouriteMovie(mv);
+  }
+
+  @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+  @PostMapping(
+          value = "/deleteplaymovie",
+          produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE,
+          headers = {"content-type=application/json"}
+  )
+  public String deletePlayMovie(@RequestBody String movies){
+    JsonObject obj = new Gson().fromJson(movies, JsonObject.class);
+    String mName = obj.get("movies").getAsString();
+    Long mv = Long.parseLong(mName);
+    return movieService.deleteWatchingMovie(mv);
+  }
+
+  @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+  @PostMapping(
+          value = "/deletemovie",
+          produces = MediaType.APPLICATION_JSON_VALUE,
+          consumes = MediaType.APPLICATION_JSON_VALUE,
+          headers = {"content-type=application/json"}
+  )
+  public String deleteMovie(@RequestBody String movies){
+    JsonObject obj = new Gson().fromJson(movies, JsonObject.class);
+    String mName = obj.get("movies").getAsString();
+    Long mv = Long.parseLong(mName);
+    return movieService.deleteAllMovie(mv);
   }
 
   @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
@@ -43,7 +132,6 @@ public class UserController {
   )
   public List<Movies> getAllMovies(){
     return movieService.getAllMovies();
-//    return "Success";
   }
 
   @GetMapping("/mod")

@@ -46,9 +46,9 @@ function Login({
                 userLogin(email,password)
                 setEmail('')
                 setPassword('')
-                if(isLoggedIn){
-                    handleClose()
-                }
+                // if(isLoggedIn){
+                //     handleClose()
+                // }
             }
         }
         if (key === "Signup"){
