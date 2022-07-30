@@ -25,6 +25,11 @@ function Pagination({loc,data1}) {
     
     const renderer = loc === "/profile" ? userMovies : loc.pathname==="/search/s" ? searchData : movies
 
+    useEffect(() => {
+      console.log(userMovies)
+    }, [userMovies])
+    
+
     const displayUsers = renderer
     .slice(pagesVisited, pagesVisited+userPerPage)
     .map((e,id) => {

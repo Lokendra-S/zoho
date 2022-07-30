@@ -13,12 +13,14 @@ import Icon from './Icon';
 function Login({
         handleShow,
         userLogin,
+        userSignUp,
         handleClose,
         show,
         isLoggedIn
     }) {
     const [key, setKey] = useState('Login');
     const [email,setEmail] = useState('');
+    const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
     const [cPassword,setCpassword] = useState(null);
     const [err,setErr] = useState()
@@ -34,17 +36,17 @@ function Login({
 
     const Validator = () => {
         if (key==='Login'){
-            if (!email && !password){
+            if (!username && !password){
                 setErr('Please Enter Credentials')
             }
-            else if (!email){
+            else if (!username){
                 setErr('Please Enter Email')
             }else if(!password){
                 setErr('Please Enter Password')
             }else{
                 setErr(null)
-                userLogin(email,password)
-                setEmail('')
+                userLogin(username,password)
+                setUsername('')
                 setPassword('')
                 // if(isLoggedIn){
                 //     handleClose()
@@ -52,7 +54,7 @@ function Login({
             }
         }
         if (key === "Signup"){
-            if (!email && !password && !cPassword){
+            if (!email && !password && !cPassword && !username){
                 setErr('Please Enter Credentials')
             }
             else if (!email){
@@ -61,12 +63,19 @@ function Login({
                 setErr('Please Enter Password')
             }else if(!cPassword){
                 setErr('Please Confirm Password')
+            }else if(!username){
+                setErr('Please Enter Usename')
             }else{
                 setErr(null)
-                setEmail('')
-                setPassword('')
-                setCpassword('')
-                console.log(email,password,cPassword)
+                if(password === cPassword){
+                    setUsername('')
+                    setEmail('')
+                    setPassword('')
+                    setCpassword('')
+                    userSignUp(username,email,password)
+                }else{
+                    setErr("Password Mismatch")
+                }
             }
         }
     }
@@ -108,8 +117,8 @@ function Login({
                                             type="text" 
                                             className='shadow-none' 
                                             placeholder="Enter Username"
-                                            value={email}
-                                            onChange={(e)=>{setEmail(e.target.value)}} 
+                                            value={username}
+                                            onChange={(e)=>{setUsername(e.target.value)}} 
                                             onFocus={() => setErr(null)}
                                         />
                                     </Form.Group>
@@ -153,6 +162,17 @@ function Login({
                                     }
                                 </Container>
                                 <Form className='w-100'>
+                                    <Form.Group className="mb-3" controlId="">
+                                        <Form.Label>Enter Username</Form.Label>
+                                        <Form.Control 
+                                            type="text" 
+                                            className='shadow-none' 
+                                            placeholder="Enter username"
+                                            value={username}
+                                            onChange={(e)=>{setUsername(e.target.value)}} 
+                                            onFocus={() => setErr(null)}
+                                        />
+                                    </Form.Group>
                                     <Form.Group className="mb-3" controlId="">
                                         <Form.Label>Email address</Form.Label>
                                         <Form.Control 

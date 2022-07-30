@@ -139,13 +139,13 @@ public class AuthController {
             .map(item -> item.getAuthority())
             .collect(Collectors.toList());
 
-//    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-//            .body(new UserInfoResponse(userDetails.getId(),
-//                    userDetails.getUsername(),
-//                    userDetails.getEmail(),
-//                    roles1));
+    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+            .body(new UserInfoResponse(userDetails.getId(),
+                    userDetails.getUsername(),
+                    userDetails.getEmail(),
+                    roles1));
 
-    return ResponseEntity.ok(new MessageResponse(jwtCookie.toString()));
+//    return ResponseEntity.ok(new MessageResponse(jwtCookie.toString()));
   }
 
   @PostMapping("/signout")

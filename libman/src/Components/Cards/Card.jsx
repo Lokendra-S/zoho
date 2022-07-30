@@ -22,13 +22,15 @@ function Cards({k,data,s}) {
     const { 
         isLoggedIn,
         userLogin,
+        userSignUp,
         addMovie,
         addFavMovie,
         addPlayMovie,
         deleteWatchMovie,
         deleteFavMovie,
         deletePlayMovie,
-        deleteAllMovie
+        deleteAllMovie,
+        allMovies
     } = useContext(BookContext)
     const [show, setShow] = useState(false);
 
@@ -59,6 +61,7 @@ function Cards({k,data,s}) {
                     playing,
                     bought
                 )
+                allMovies()
             }else if(favourite === 1){
                 addFavMovie(
                     movieId,
@@ -72,6 +75,7 @@ function Cards({k,data,s}) {
                     playing,
                     bought
                 )
+                allMovies()
             }
             else {
                 addPlayMovie(
@@ -86,6 +90,7 @@ function Cards({k,data,s}) {
                     playing,
                     bought
                 )
+                allMovies()
             }
         }else{
             alert('Kindly Login To Process This Request.')
@@ -128,12 +133,17 @@ function Cards({k,data,s}) {
     const handleDelete = (del,data) => {
         if(del === 0){
             deleteWatchMovie(String(data))
+            deleteAllMovie(String(data))
+            allMovies()
         }else if(del === 1){
             deleteFavMovie(String(data))
+            deleteAllMovie(String(data))
+            allMovies()
         }else{
             deletePlayMovie(String(data))
+            deleteAllMovie(String(data))
+            allMovies()
         }
-        deleteAllMovie(String(data))
     }
 
     const mdRating = s === "u" ? parseInt(data.movieRating)  : data.imDbRating ? data.imDbRating : "0"
@@ -280,7 +290,7 @@ function Cards({k,data,s}) {
                                 <IconContext.Provider value = {{className:"card_icon1"}}>
                                     <BsFillPlayCircleFill/> 
                                 </IconContext.Provider>
-                                <p className='mb-0 buy_text'>Play</p>
+                                <p className='mb-0 buy_text'>{data.playing ? "Play" : "Stop"}</p>
                             </Button>
                         </Container>
                     </Card.Body>
@@ -292,6 +302,7 @@ function Cards({k,data,s}) {
                 handleShow={handleShow} 
                 userLogin={userLogin} 
                 handleClose={handleClose} 
+                userSignUp = {userSignUp}
             />
         </>
     )

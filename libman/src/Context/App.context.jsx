@@ -218,6 +218,29 @@ export const AppContext = ({children}) => {
     })
   }
 
+  const userSignUp = async(username,email,password) => {
+    await axios.post("http://localhost:8080/api/auth/signup",{
+      username : username,
+      email : email,
+      role : ["user"],
+      password : password
+    },{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        setIsLoggedIn(false)
+        console.log(data)
+      }
+    }).catch(e => {
+      alert(e.message)
+    })
+  }
+
   const addMovie = async(
       movieId,
       movieImgId,
@@ -487,6 +510,7 @@ export const AppContext = ({children}) => {
       videos : videos,
 
       //auth
+      userSignUp : userSignUp,
       userLogin : userLogin,
       userLogOut : userLogOut,
       addMovie : addMovie,

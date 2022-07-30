@@ -158,8 +158,8 @@ public class MovieService {
                 if (movies1.get().getWatchlist() == 0 && movies1.get().getFavourite() == 0 && movies1.get().getPlaying() == 0){
                     movieRepository.deleteById(movies1.get().getUid());
                 }
+                return "success de;";
             }
-            return "success de;";
         }catch (Exception e){
             return "error";
         }
