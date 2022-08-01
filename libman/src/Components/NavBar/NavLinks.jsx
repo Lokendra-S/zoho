@@ -19,7 +19,7 @@ function NavLinks() {
                         <NavLink className='text-uppercase home_nav px-3 nav-link' to="/toprated">top rated</NavLink>
                         <NavLink className='text-uppercase home_nav px-3 nav-link' to="/nowplaying">now playing</NavLink>
                         <NavLink className='text-uppercase home_nav px-3 nav-link' to="/profile">My List</NavLink>
-                        <NavLink className='text-uppercase home_nav px-3 nav-link' to="/:id/cart">cart</NavLink>
+                        {/* <NavLink className='text-uppercase home_nav px-3 nav-link' to="/:id/cart">cart</NavLink> */}
                     </Nav>
                 </Navbar.Collapse>
             </Container>

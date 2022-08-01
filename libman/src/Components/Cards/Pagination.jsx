@@ -3,18 +3,15 @@ import ReactPaginate from 'react-paginate'
 import { IconContext } from 'react-icons'
 import { GrNext, GrPrevious } from 'react-icons/gr'
 
-import json_data from '../Pagination/MOCK_DATA.json'
 import { useContext } from 'react'
 import { BookContext } from '../../Context/App.context'
 import Cards from './Card'
 import { Container, Row } from 'react-bootstrap'
-import { useLocation } from 'react-router-dom'
 
-function Pagination({loc,data1}) {
+function Pagination({loc}) {
 
-    const { movies,userMovies,popularPages,ChangeCurrPage,addMovie,fetchSingleMovieSearch,movieData,allMovies,searchData } = useContext(BookContext)
+    const { movies,userMovies,popularPages,searchData } = useContext(BookContext)
 
-    const [ users, setUsers ] = useState(popularPages)
     const [ pageNumber, setPageNumber ] = useState(0)
 
     useEffect(()=>{
@@ -24,11 +21,6 @@ function Pagination({loc,data1}) {
     const pagesVisited = pageNumber * userPerPage
     
     const renderer = loc === "/profile" ? userMovies : loc.pathname==="/search/s" ? searchData : movies
-
-    useEffect(() => {
-      console.log(userMovies)
-    }, [userMovies])
-    
 
     const displayUsers = renderer
     .slice(pagesVisited, pagesVisited+userPerPage)

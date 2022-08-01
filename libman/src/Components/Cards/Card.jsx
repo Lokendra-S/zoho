@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
     Container,
     Button,
@@ -6,10 +6,9 @@ import {
     Card,
 
 } from 'react-bootstrap'
-import { BsCartPlus,BsStarFill,BsStarHalf,BsStar,BsFillPlayCircleFill } from 'react-icons/bs'
-import { IoWalletOutline,IoHeartOutline } from 'react-icons/io5'
-import { MdPlaylistAdd } from 'react-icons/md'
-// import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { BsStarFill,BsStar,BsFillPlayCircleFill,BsStopCircleFill } from 'react-icons/bs'
+import { IoHeartOutline } from 'react-icons/io5'
+import { MdPlaylistAdd,MdOutlinePlaylistAddCheck } from 'react-icons/md'
 import { IconContext } from 'react-icons'
 
 import im from '../../Images/971.jpg'
@@ -29,7 +28,6 @@ function Cards({k,data,s}) {
         deleteWatchMovie,
         deleteFavMovie,
         deletePlayMovie,
-        deleteAllMovie,
         allMovies
     } = useContext(BookContext)
     const [show, setShow] = useState(false);
@@ -48,7 +46,7 @@ function Cards({k,data,s}) {
         query
     ) => {
         setShow(false);
-        if(!isLoggedIn){
+        if(localStorage.getItem("user")){
             if(query){
                 if(query === "w"){
                     addMovie(
@@ -116,7 +114,7 @@ function Cards({k,data,s}) {
             bought,
             query
         ) => {
-        if (isLoggedIn){
+        if (!localStorage.getItem("user")){
             handleShow()
         }else{
             handleClose(
@@ -138,16 +136,10 @@ function Cards({k,data,s}) {
     const handleDelete = (del,data) => {
         if(del === 0){
             deleteWatchMovie(String(data))
-            // deleteAllMovie(String(data))
-            allMovies()
         }else if(del === 1){
             deleteFavMovie(String(data))
-            deleteAllMovie(String(data))
-            allMovies()
         }else{
             deletePlayMovie(String(data))
-            deleteAllMovie(String(data))
-            allMovies()
         }
     }
 
@@ -171,13 +163,12 @@ function Cards({k,data,s}) {
                 <Card className='w-100 border-0 card_parent text-center p-3 shadow'>
                     <Container fluid className='card_img_container'
                     >
-                        {data.user && data.user.username}
                         <Card.Img variant="top" className='card_img' src={s === "u" ? data.movieImgId : data.image} 
                             onClick={()=>navigate(`/movie/${data.id}`)}
                         />
-                                <Button className={`heart_btn shadow ${data.favourite ? "heart_active" : ''}`}
+                                <Button className={`heart_btn shadow ${data.favourite && data.favourite === 1 ? "heart_active" : ''}`}
                                     // disabled = { data.favourite && true }
-                                    onClick={ data.favourite ? 
+                                    onClick={ data.favourite&& data.favourite===1 ? 
                                         () => handleDelete(1,data.id)
                                     :
                                     ()=>handleClick(
@@ -204,9 +195,6 @@ function Cards({k,data,s}) {
                                         s === "u" ? data.movieRating : 
                                         data.imDbRating ? data.imDbRating : "N/A"
                                     }</p>
-                                    {/* <IconContext.Provider value = {{className:"load_icon position-absolute"}}>
-                                        <AiOutlineLoading3Quarters />
-                                    </IconContext.Provider> */}
                                 </Button>
                     </Container>
                     <Card.Body className='shadow-sm mx-4 card_body'>
@@ -240,9 +228,6 @@ function Cards({k,data,s}) {
                                 }
                                 })
                             }
-                            {/* <IconContext.Provider value = {{className:"star rating_star_half_fill me-1"}}>
-                                <BsStarHalf/> 
-                            </IconContext.Provider> */}
                         </Container>
                         <Card.Text className='book_release'>
                             { s === "u" ? `Release on ${data.movieReleased}` : 
@@ -256,7 +241,6 @@ function Cards({k,data,s}) {
                                 data.watchlist ? 
                                     () => {
                                         handleDelete(0,data.id)
-                                        deleteAllMovie(data.id)
                                     }
                                 :
                                 ()=>handleClick(
@@ -273,9 +257,26 @@ function Cards({k,data,s}) {
                                     1,
                                     "w"
                                 )} className='cart_btn shadow-none'>
-                                <IconContext.Provider value = {{className:"card_icon"}}>
-                                    <MdPlaylistAdd />
-                                </IconContext.Provider>
+                                {data.watchlist ? 
+                                    data.watchlist === 1 ?
+                                        <>
+                                            <IconContext.Provider value = {{className:"card_icon"}}>
+                                                <MdOutlinePlaylistAddCheck />
+                                            </IconContext.Provider>
+                                        </>
+                                    :
+                                        <>
+                                            <IconContext.Provider value = {{className:"card_icon"}}>
+                                                <MdPlaylistAdd />
+                                            </IconContext.Provider>
+                                        </>
+                                :
+                                    <>
+                                        <IconContext.Provider value = {{className:"card_icon"}}>
+                                            <MdPlaylistAdd />
+                                        </IconContext.Provider>
+                                    </>
+                                }
                             </Button>
                             <Button variant="dark" 
                                 //disabled = { data.playing && true } 
@@ -299,10 +300,29 @@ function Cards({k,data,s}) {
                                         "p"
                                     )}
                             >
-                                <IconContext.Provider value = {{className:"card_icon1"}}>
-                                    <BsFillPlayCircleFill/> 
-                                </IconContext.Provider>
-                                <p className='mb-0 buy_text'>{data.playing===1 ? "Play" : "Stop"}</p>
+                                {data.playing ? 
+                                    data.playing === 1 ?
+                                        <>
+                                            <IconContext.Provider value = {{className:"card_icon1"}}>
+                                                <BsStopCircleFill/> 
+                                            </IconContext.Provider>
+                                            <p className='mb-0 buy_text'>Stop</p>
+                                        </>
+                                    :
+                                        <>
+                                            <IconContext.Provider value = {{className:"card_icon1"}}>
+                                                <BsFillPlayCircleFill/> 
+                                            </IconContext.Provider>
+                                            <p className='mb-0 buy_text'>Play</p>
+                                        </>
+                                :
+                                    <>
+                                        <IconContext.Provider value = {{className:"card_icon1"}}>
+                                            <BsFillPlayCircleFill/> 
+                                        </IconContext.Provider>
+                                        <p className='mb-0 buy_text'>Play</p>
+                                    </>
+                                }
                             </Button>
                         </Container>
                     </Card.Body>

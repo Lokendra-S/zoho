@@ -1,26 +1,22 @@
 import React, { useEffect } from 'react'
-import { useState } from 'react'
 import { useContext } from 'react'
 import {
     Container,
-    Dropdown,
-    Row,
+    Dropdown
 
 } from 'react-bootstrap'
 import { IconContext } from 'react-icons'
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs'
 import { useLocation } from 'react-router-dom'
-import { AppContext, BookContext } from '../../Context/App.context'
+import { BookContext } from '../../Context/App.context'
 
-import Cards from './Card'
 import Pagination from './Pagination'
 
 
 function HomeCard({width}) {
     const location = useLocation();
     const loc = location.pathname;
-    const { 
-        ChangeCurrPage,
+    const {
         fetchTopRatedMovies,
         fetchPopularMovies,
         fetchNowPlayingMovies,

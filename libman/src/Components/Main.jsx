@@ -1,5 +1,7 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect, useContext} from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BookContext } from '../Context/App.context'
+import AdminHome from './Admin/AdminHome'
 
 import HomeCard from './Cards/HomeCard'
 import Sample from './Cards/Sample'
@@ -9,17 +11,18 @@ import Header from './NavBar/Header'
 import BookContent from './SingleBook/BookContent'
 
 function Main() {
-  const [width, setWidth] = useState('Lokendra')
+  const { isLoggedIn, username } = useContext(BookContext)
+  const [width, setWidth] = useState(localStorage.getItem("user") ? localStorage.getItem("user") : "Username")
   const [w,setW] = useState(window.innerWidth)
 
   useEffect(() => {
     function handleResize() {
       setW(window.innerWidth)
-      if (w < 451){
-          setWidth(width[0])
-      }else{
-          setWidth('Lokendra')
-      }
+      // if (w < 451){
+      //     setWidth(width[0])
+      // }else{
+      //     setWidth(localStorage.getItem("user") ? localStorage.getItem("user") : "Username")
+      // }
       console.log(w)
     }
       
@@ -35,12 +38,13 @@ function Main() {
         <Router>
           <Header width={width}/>
           <Routes>
-            <Route index path='/' element={<HomeCard width={width}/>} />
+            <Route index path='/' element={<HomeCard width={username}/>} />
             <Route index path='/upcoming' element={<HomeCard width={width}/>} />
             <Route path='/toprated' element={<HomeCard width={width}/>} />
             <Route path='/nowplaying' element={<HomeCard width={width}/>} />
             <Route path='/profile' element={<HomeCard width={width}/>} />
-            <Route path='/:id/cart' element={<CartHome />} />
+            <Route path='/admin' element={<AdminHome width={width}/>} />
+            {/* <Route path='/:id/cart' element={<CartHome />} /> */}
             <Route path='/movie/:movieId' element={<BookContent/>} />
             <Route path='/search/:s' element={<Sample/>} />
           </Routes>

@@ -23,21 +23,7 @@ public class UserController {
 
   @Autowired
   MovieService movieService;
-  @GetMapping("/all")
-  public String allAccess() {
-    return "Public Content.";
-  }
 
-//  @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
-//  @PostMapping(
-//          value = "/checkmovie",
-//          produces = MediaType.APPLICATION_JSON_VALUE,
-//          consumes = MediaType.APPLICATION_JSON_VALUE,
-//          headers = {"content-type=application/json"}
-//  )
-//  public Boolean checkMovie(@RequestBody Movies movies){
-//    return movieService.checkMovie(movies);
-//  }
   @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
   @PostMapping(
           value = "/addmovie",
@@ -135,11 +121,5 @@ public class UserController {
   @PreAuthorize("hasRole('MODERATOR')")
   public String moderatorAccess() {
     return "Moderator Board.";
-  }
-
-  @GetMapping("/admin")
-  @PreAuthorize("hasRole('ADMIN')")
-  public String adminAccess() {
-    return "Admin Board.";
   }
 }

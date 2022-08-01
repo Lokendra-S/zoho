@@ -11,12 +11,10 @@ import {
 import Icon from './Icon';
 
 function Login({
-        handleShow,
         userLogin,
         userSignUp,
         handleClose,
-        show,
-        isLoggedIn
+        show
     }) {
     const [key, setKey] = useState('Login');
     const [email,setEmail] = useState('');
@@ -86,7 +84,7 @@ function Login({
                 keyboard={false}
             >
                 <Modal.Header closeButton className='px-5 shadow-none'>
-                    <Modal.Title className='fs-3 fw-bold'>eLib</Modal.Title>
+                    <Modal.Title className='fs-3 fw-bold'>iMoviez</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Container fluid className='pill_nav d-flex flex-column justify-content-center align-items-center'>
@@ -131,9 +129,9 @@ function Login({
                                             onFocus={() => setErr(null)}
                                         />
                                     </Form.Group>
-                                    <Form.Group className="mb-3" controlId="">
+                                    {/* <Form.Group className="mb-3" controlId="">
                                         <Form.Check type="checkbox" onFocus={() => setErr(null)} className='shadow-none' label="Remember me" />
-                                    </Form.Group>
+                                    </Form.Group> */}
                                     <Button
                                         onClick={Validator} 
                                         variant="dark" 
@@ -147,8 +145,8 @@ function Login({
                                     </p>
                                 </Form>
                                 <hr/>
-                                <p className='mb-0 text-center'>Or Login Using</p>
-                                <Icon/>
+                                {/* <p className='mb-0 text-center'>Or Login Using</p>
+                                <Icon/> */}
                             </Tab>
                             <Tab eventKey="Signup" title="Signup">
                                 <Container fluid>
@@ -203,9 +201,9 @@ function Login({
                                             onFocus={() => setErr(null)}
                                         />
                                     </Form.Group>
-                                    <Form.Group className="mb-3" controlId="">
+                                    {/* <Form.Group className="mb-3" controlId="">
                                         <Form.Check type="checkbox" onFocus={() => setErr(null)} className='shadow-none' label="Remember me" />
-                                    </Form.Group>
+                                    </Form.Group> */}
                                     <Button 
                                         onClick={Validator} 
                                         variant="dark" 
@@ -219,8 +217,8 @@ function Login({
                                     </p>
                                 </Form>
                                 <hr/>
-                                <p className='mb-0 text-center'>Or Signup Using</p>
-                                <Icon/>
+                                {/* <p className='mb-0 text-center'>Or Signup Using</p>
+                                <Icon/> */}
                             </Tab>
                         </Tabs>
                     </Container>

@@ -9,15 +9,32 @@ export const AppContext = ({children}) => {
     User
   */
   const [isLoggedIn,setIsLoggedIn] = useState(true)
+  const [uname ,setUsername] = useState(localStorage.getItem("user")?localStorage.getItem("user"):'username')
   const [userMovies,setUserMovies] = useState([])
 
   const [popularMovies,setPopularMovies] = useState([])
   const [popularMoviePages,setPopularMoviePages] = useState(0)
   const [currPage,setCurrPage] = useState("0")
 
-  // useEffect(() => {
+  useEffect(() => {
+    const userUpdate = () => {
+      const user = localStorage.getItem("user")
+      if(user){
+        setUsername(user)
+      }
+    }
 
-  // }, [])
+    window.addEventListener('storage',userUpdate)
+  
+    return () => {
+      window.removeEventListener('storage',userUpdate)
+    }
+  }, [])
+
+  useEffect(() => {
+    setUsername(uname)
+    console.log(uname)
+  },[uname])
   
 
   /* 
@@ -33,6 +50,13 @@ export const AppContext = ({children}) => {
   const [posters,setPosters] = useState([])
   const [images,setImages] = useState([])
   const [videos,setVideos] = useState([])
+
+  useEffect(() => {
+    setUserMovies(userMovies)
+  },[userMovies])
+  useEffect(() => {
+    setPopularMoviePages(popularMoviePages)
+  },[popularMoviePages])
 
   const fetchMovieSearch = async(mId) => {
     await axios.post("http://localhost:8080/api/movie/searchMovie",{
@@ -118,10 +142,6 @@ export const AppContext = ({children}) => {
   const fetchSingleMovieVideos = async(mId) => {
     await axios.post("http://localhost:8080/api/movie/movieMedia",{
       movieId : mId
-    },{
-      headers : {
-        // 'access-control-allow-origin': '*',
-      }
     }).then((data)=>{
       setVideos(data.data)
     }).catch((e) => {
@@ -191,6 +211,8 @@ export const AppContext = ({children}) => {
     }).then(data => {
       if (data.status === 200){
         setIsLoggedIn(false)
+        setUsername(username)
+        localStorage.setItem("user",username)
         console.log(data)
       }
     }).catch(e => {
@@ -211,6 +233,8 @@ export const AppContext = ({children}) => {
         setIsLoggedIn(true)
         const ck = document.cookie.split(";").filter(e => e.startsWith("loki="))
         document.cookie = ck+";max-age=0";
+        localStorage.removeItem("user")
+        setUsername("username")
         console.log(data)
       }
     }).catch(e => {
@@ -257,6 +281,7 @@ export const AppContext = ({children}) => {
     }).then(data => {
       if (data.status === 200){
         console.log(data)
+        deleteAllMovie(movieId)
       }
     }).catch(e => {
       alert("Error occured while performing query kindly try again later.")
@@ -279,6 +304,7 @@ export const AppContext = ({children}) => {
     }).then(data => {
       if (data.status === 200){
         console.log(data)
+        deleteAllMovie(movieId)
       }
     }).catch(e => {
       alert("Error occured while performing query kindly try again later.")
@@ -301,6 +327,7 @@ export const AppContext = ({children}) => {
     }).then(data => {
       if (data.status === 200){
         console.log(data)
+        deleteAllMovie(movieId)
       }
     }).catch(e => {
       alert("Error occured while performing query kindly try again later.")
@@ -323,6 +350,7 @@ export const AppContext = ({children}) => {
     }).then(data => {
       if (data.status === 200){
         console.log(data)
+        allMovies()
       }
     }).catch(e => {
       alert("Error occured while performing query kindly try again later.")
@@ -363,6 +391,7 @@ export const AppContext = ({children}) => {
   }).then(data => {
     if (data.status === 200){
       console.log(data)
+      allMovies()
     }
   }).catch(e => {
     alert("Error occured while performing query kindly try again later.")
@@ -403,6 +432,7 @@ export const AppContext = ({children}) => {
     }).then(data => {
       if (data.status === 200){
         console.log(data)
+        allMovies()
       }
     }).catch(e => {
       console.log(e.message)
@@ -444,14 +474,15 @@ export const AppContext = ({children}) => {
   }).then(data => {
     if (data.status === 200){
       console.log(data)
+      allMovies()
     }
   }).catch(e => {
     alert("Error occured while performing query kindly try again later.")
   })
   }
 
-  const allMovies = async() => {
-    await axios.get("http://localhost:8080/api/user/allMovies",{
+  const allMovies = () => {
+    axios.get("http://localhost:8080/api/user/allMovies",{
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin" : "http://localhost:8080",
@@ -461,6 +492,7 @@ export const AppContext = ({children}) => {
     }).then(data => {
       if (data.status === 200){
         setUserMovies(data.data)
+        setPopularMoviePages(data.data.length)
       }
     }).catch(e => {
       alert("Error occured while performing query kindly try again later."+e.message)
@@ -511,6 +543,8 @@ export const AppContext = ({children}) => {
       videos : videos,
 
       //auth
+      uname : uname,
+      setUsername : setUsername,
       userSignUp : userSignUp,
       userLogin : userLogin,
       userLogOut : userLogOut,

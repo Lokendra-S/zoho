@@ -9,7 +9,7 @@ import {
     Nav,
 
 } from 'react-bootstrap'
-import { FiSearch,FiBook,FiShoppingCart,FiHeart } from 'react-icons/fi'
+import { FiSearch,FiShoppingCart,FiHeart } from 'react-icons/fi'
 import { IconContext } from 'react-icons'
 import { MdLogout } from 'react-icons/md'
 import { BiEditAlt } from 'react-icons/bi'
@@ -24,7 +24,7 @@ function NavHead({
     }
 ) {
     const navigate = useNavigate()
-    const { fetchMovieSearch } = useContext(BookContext)
+    const { fetchMovieSearch,uname } = useContext(BookContext)
     const [ inp, setInp] = useState("")
 
     const inpOnChange = (e) =>{
@@ -64,7 +64,7 @@ function NavHead({
                             drop='bottom'
                         >
                             <Dropdown.Toggle className='d-flex justify-content-center align-items-center userName shadow-none' id="dropdown-basic">
-                                <p className='mb-0 userName_p'>{width}</p>
+                                <p className='mb-0 userName_p'>{uname}</p>
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
@@ -80,28 +80,20 @@ function NavHead({
                                     </IconContext.Provider>
                                     Become Author
                                 </Dropdown.Item> */}
-                                <Dropdown.Item className='d-flex justify-content-start align-items-center'>
+                                {/* <Dropdown.Item className='d-flex justify-content-start align-items-center'>
                                     <NavLink className='text-uppercase px-3 nav-link nav-link-drop' to='/:id/cart'>
                                         <IconContext.Provider value = {{className:"cart_icon me-2 my-auto"}}>
                                             <FiShoppingCart /> 
                                         </IconContext.Provider>
                                         Cart
                                     </NavLink>
-                                </Dropdown.Item>
+                                </Dropdown.Item> */}
                                 <Dropdown.Item className='d-flex justify-content-start align-items-center'>
-                                    <NavLink className='text-uppercase px-3 nav-link nav-link-drop' to='/:id/wishlist'>
+                                    <NavLink className='text-uppercase px-3 nav-link nav-link-drop' to='/profile'>
                                         <IconContext.Provider value = {{className:"wishlist_icon me-2 my-auto"}}>
                                             <AiOutlineAppstoreAdd /> 
                                         </IconContext.Provider>
-                                        Wishlist
-                                    </NavLink>
-                                </Dropdown.Item>
-                                <Dropdown.Item className='d-flex justify-content-start align-items-center'>
-                                    <NavLink className='text-uppercase px-3 nav-link nav-link-drop' to="/:id/favourite">
-                                        <IconContext.Provider value = {{className:"favourites_icon me-2 my-auto"}}>
-                                            <FiHeart /> 
-                                        </IconContext.Provider>
-                                        Favourites
+                                        My Movies
                                     </NavLink>
                                 </Dropdown.Item>
                                 <Dropdown.Item className='mt-2 px-3 d-flex justify-content-start align-items-center text-center text-uppercase w-100 logout_btn'
