@@ -44,53 +44,56 @@ function Cards({k,data,s}) {
         watchlist,
         favourite,
         playing,
-        bought
+        bought,
+        query
     ) => {
         setShow(false);
         if(!isLoggedIn){
-            if(watchlist === 1){
-                addMovie(
-                    movieId,
-                    movieImgId,
-                    movieTitle,
-                    movieDirector,
-                    movieReleased,
-                    movieRating,
-                    watchlist,
-                    favourite,
-                    playing,
-                    bought
-                )
-                allMovies()
-            }else if(favourite === 1){
-                addFavMovie(
-                    movieId,
-                    movieImgId,
-                    movieTitle,
-                    movieDirector,
-                    movieReleased,
-                    movieRating,
-                    watchlist,
-                    favourite,
-                    playing,
-                    bought
-                )
-                allMovies()
-            }
-            else {
-                addPlayMovie(
-                    movieId,
-                    movieImgId,
-                    movieTitle,
-                    movieDirector,
-                    movieReleased,
-                    movieRating,
-                    watchlist,
-                    favourite,
-                    playing,
-                    bought
-                )
-                allMovies()
+            if(query){
+                if(query === "w"){
+                    addMovie(
+                        movieId,
+                        movieImgId,
+                        movieTitle,
+                        movieDirector,
+                        movieReleased,
+                        movieRating,
+                        watchlist,
+                        favourite,
+                        playing,
+                        bought
+                    )
+                    allMovies()
+                }else if(query === "f"){
+                    addFavMovie(
+                        movieId,
+                        movieImgId,
+                        movieTitle,
+                        movieDirector,
+                        movieReleased,
+                        movieRating,
+                        watchlist,
+                        favourite,
+                        playing,
+                        bought
+                    )
+                    allMovies()
+                }
+                else {
+                    addPlayMovie(
+                        movieId,
+                        movieImgId,
+                        movieTitle,
+                        movieDirector,
+                        movieReleased,
+                        movieRating,
+                        watchlist,
+                        favourite,
+                        playing,
+                        bought
+                    )
+                    allMovies()
+                }
             }
         }else{
             alert('Kindly Login To Process This Request.')
@@ -110,7 +113,8 @@ function Cards({k,data,s}) {
             watchlist,
             favourite,
             playing,
-            bought
+            bought,
+            query
         ) => {
         if (isLoggedIn){
             handleShow()
@@ -125,7 +129,8 @@ function Cards({k,data,s}) {
                 watchlist,
                 favourite,
                 playing,
-                bought
+                bought,
+                query
             )
         }
     }
@@ -133,7 +138,7 @@ function Cards({k,data,s}) {
     const handleDelete = (del,data) => {
         if(del === 0){
             deleteWatchMovie(String(data))
-            deleteAllMovie(String(data))
+            // deleteAllMovie(String(data))
             allMovies()
         }else if(del === 1){
             deleteFavMovie(String(data))
@@ -166,13 +171,14 @@ function Cards({k,data,s}) {
                 <Card className='w-100 border-0 card_parent text-center p-3 shadow'>
                     <Container fluid className='card_img_container'
                     >
+                        {data.user && data.user.username}
                         <Card.Img variant="top" className='card_img' src={s === "u" ? data.movieImgId : data.image} 
                             onClick={()=>navigate(`/movie/${data.id}`)}
                         />
                                 <Button className={`heart_btn shadow ${data.favourite ? "heart_active" : ''}`}
                                     // disabled = { data.favourite && true }
                                     onClick={ data.favourite ? 
-                                        () => handleDelete(1,data.uid)
+                                        () => handleDelete(1,data.id)
                                     :
                                     ()=>handleClick(
                                         data.id,
@@ -183,9 +189,10 @@ function Cards({k,data,s}) {
                                         data.releaseState ? data.releaseState : data.year,
                                         data.imDbRating ? String(data.imDbRating) : "N/A",
                                         0,
-                                        1,
                                         0,
-                                        1
+                                        0,
+                                        1,
+                                        "f"
                                     )}
                                 >
                                     <IconContext.Provider value = {{className:"heart_icon"}}>
@@ -247,7 +254,10 @@ function Cards({k,data,s}) {
                             //disabled = { data.watchlist && true } 
                             onClick={
                                 data.watchlist ? 
-                                    () => handleDelete(0,data.uid)
+                                    () => {
+                                        handleDelete(0,data.id)
+                                        deleteAllMovie(data.id)
+                                    }
                                 :
                                 ()=>handleClick(
                                     data.id,
@@ -257,10 +267,11 @@ function Cards({k,data,s}) {
                                         data.crew ? data.crew.slice(0,data.crew.indexOf("(")) : "",
                                     data.releaseState ? data.releaseState : data.year,
                                     data.imDbRating ? String(data.imDbRating) : "N/A",
+                                    0,
+                                    0,
+                                    0,
                                     1,
-                                    0,
-                                    0,
-                                    1
+                                    "w"
                                 )} className='cart_btn shadow-none'>
                                 <IconContext.Provider value = {{className:"card_icon"}}>
                                     <MdPlaylistAdd />
@@ -271,7 +282,7 @@ function Cards({k,data,s}) {
                                 className='fs-6 buy_btn shadow-none d-flex justify-content-center align-items-center text-uppercase'
                                 onClick={
                                     data.playing ? 
-                                        () => handleDelete(2,data.uid)
+                                        () => handleDelete(2,data.id)
                                     :
                                     ()=>handleClick(
                                         data.id,
@@ -283,14 +294,15 @@ function Cards({k,data,s}) {
                                         data.imDbRating ? String(data.imDbRating) : "N/A",
                                         0,
                                         0,
+                                        0,
                                         1,
-                                        1
+                                        "p"
                                     )}
                             >
                                 <IconContext.Provider value = {{className:"card_icon1"}}>
                                     <BsFillPlayCircleFill/> 
                                 </IconContext.Provider>
-                                <p className='mb-0 buy_text'>{data.playing ? "Play" : "Stop"}</p>
+                                <p className='mb-0 buy_text'>{data.playing===1 ? "Play" : "Stop"}</p>
                             </Button>
                         </Container>
                     </Card.Body>

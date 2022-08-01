@@ -241,133 +241,133 @@ export const AppContext = ({children}) => {
     })
   }
 
+  const deleteWatchMovie = (
+    movieId
+  ) => {
+    axios.post("http://localhost:8080/api/user/deletewatchmovie",{
+      movies : movieId
+
+    },{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        console.log(data)
+      }
+    }).catch(e => {
+      alert("Error occured while performing query kindly try again later.")
+    })
+  }
+
+  const deleteFavMovie = (
+    movieId
+  ) => {
+     axios.post("http://localhost:8080/api/user/deletefavmovie",{
+      movies : movieId
+
+    },{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        console.log(data)
+      }
+    }).catch(e => {
+      alert("Error occured while performing query kindly try again later.")
+    })
+  }
+
+  const deletePlayMovie = (
+    movieId
+  ) => {
+     axios.post("http://localhost:8080/api/user/deleteplaymovie",{
+      movies : movieId
+
+    },{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        console.log(data)
+      }
+    }).catch(e => {
+      alert("Error occured while performing query kindly try again later.")
+    })
+  }
+
+  const deleteAllMovie = (
+    movieId
+  ) => {
+     axios.post("http://localhost:8080/api/user/deletemovie",{
+      movies : movieId
+
+    },{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        console.log(data)
+      }
+    }).catch(e => {
+      alert("Error occured while performing query kindly try again later.")
+    })
+  }
+
   const addMovie = async(
-      movieId,
-      movieImgId,
-      movieTitle,
-      movieDirector,
-      movieReleased,
-      movieRating,
-      watchlist,
-      favourite,
-      playing,
-      bought
-    ) => {
-    await axios.post("http://localhost:8080/api/user/addmovie",{
-      id : movieId,
-      movieImgId : movieImgId,
-      movieTitle : movieTitle,
-      movieDirector : movieDirector,
-      movieReleased : movieReleased,
-      movieRating : movieRating,
-      watchlist : watchlist,
-      favourite : favourite,
-      playing : playing,
-      bought : bought
-
-    },{
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin" : "http://localhost:8080",
-        "Access-Control-Allow-Credentials" : true
-      },
-      withCredentials: true
-    }).then(data => {
-      if (data.status === 200){
-        console.log(data)
-      }
-    }).catch(e => {
-      alert("Error occured while performing query kindly try again later.")
-    })
-  }
-
-  const deleteWatchMovie = async(
-    movieId
+    movieId,
+    movieImgId,
+    movieTitle,
+    movieDirector,
+    movieReleased,
+    movieRating,
+    watchlist,
+    favourite,
+    playing,
+    bought
   ) => {
-    await axios.post("http://localhost:8080/api/user/deletewatchmovie",{
-      movies : movieId
+  await axios.post("http://localhost:8080/api/user/addmovie",{
+    id : movieId,
+    movieImgId : movieImgId,
+    movieTitle : movieTitle,
+    movieDirector : movieDirector,
+    movieReleased : movieReleased,
+    movieRating : movieRating,
+    watchlist : watchlist,
+    favourite : favourite,
+    playing : playing,
+    bought : bought
 
-    },{
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin" : "http://localhost:8080",
-        "Access-Control-Allow-Credentials" : true
-      },
-      withCredentials: true
-    }).then(data => {
-      if (data.status === 200){
-        console.log(data)
-      }
-    }).catch(e => {
-      alert("Error occured while performing query kindly try again later.")
-    })
-  }
-
-  const deleteFavMovie = async(
-    movieId
-  ) => {
-    await axios.post("http://localhost:8080/api/user/deletefavmovie",{
-      movies : movieId
-
-    },{
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin" : "http://localhost:8080",
-        "Access-Control-Allow-Credentials" : true
-      },
-      withCredentials: true
-    }).then(data => {
-      if (data.status === 200){
-        console.log(data)
-      }
-    }).catch(e => {
-      alert("Error occured while performing query kindly try again later.")
-    })
-  }
-
-  const deletePlayMovie = async(
-    movieId
-  ) => {
-    await axios.post("http://localhost:8080/api/user/deleteplaymovie",{
-      movies : movieId
-
-    },{
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin" : "http://localhost:8080",
-        "Access-Control-Allow-Credentials" : true
-      },
-      withCredentials: true
-    }).then(data => {
-      if (data.status === 200){
-        console.log(data)
-      }
-    }).catch(e => {
-      alert("Error occured while performing query kindly try again later.")
-    })
-  }
-
-  const deleteAllMovie = async(
-    movieId
-  ) => {
-    await axios.post("http://localhost:8080/api/user/deletemovie",{
-      movies : movieId
-
-    },{
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin" : "http://localhost:8080",
-        "Access-Control-Allow-Credentials" : true
-      },
-      withCredentials: true
-    }).then(data => {
-      if (data.status === 200){
-        console.log(data)
-      }
-    }).catch(e => {
-      alert("Error occured while performing query kindly try again later.")
-    })
-  }
+  },{
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin" : "http://localhost:8080",
+      "Access-Control-Allow-Credentials" : true
+    },
+    withCredentials: true
+  }).then(data => {
+    if (data.status === 200){
+      console.log(data)
+    }
+  }).catch(e => {
+    alert("Error occured while performing query kindly try again later.")
+  })
+}
 
   const addFavMovie = async(
     movieId,
@@ -405,6 +405,7 @@ export const AppContext = ({children}) => {
         console.log(data)
       }
     }).catch(e => {
+      console.log(e.message)
       alert("Error occured while performing query kindly try again later.")
     })
   }

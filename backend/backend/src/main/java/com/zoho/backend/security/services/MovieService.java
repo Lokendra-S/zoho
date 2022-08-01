@@ -13,9 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,139 +32,220 @@ public class MovieService {
 
             User user = userRepository.findByUsername(username)
                     .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-            Optional<Movies> movies1 = movieRepository.findById(movies.getId());
+            List<Movies> movies1 = movieRepository.findById(movies.getId());
             if(movies1.isEmpty()){
                 System.out.println("yes");
+                movies.setWatchlist(1);
                 movies.setUser(user);
                 movieRepository.save(movies);
                 return "No";
-            }else{
-                movies1.get().setWatchlist(1);
-                movieRepository.save(movies1.get());
-                return "Yes";
+            }else {
+                for (int i=0;i<movies1.size();i++) {
+                    if (Objects.equals(movies1.get(i).getUser().getUsername(), username)) {
+                        System.out.println("No");
+                        movies1.get(i).setWatchlist(1);
+                        movieRepository.save(movies1.get(i));
+                    } else if(i+1 == movies1.size()) {
+                        System.out.println("YES");
+                        movies.setWatchlist(1);
+                        movies.setUser(user);
+                        movieRepository.save(movies);
+                    }
+                }
+
             }
-        }catch (Exception e){
-            System.out.println(e);
+            return "success";
+        }catch (Exception e) {
+            System.out.println(e.toString());
             return "error";
         }
     }
     public String newFavouriteMovie(Movies movies) {
+        try{
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String username = auth.getName();
 
             User user = userRepository.findByUsername(username)
                     .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-            Optional<Movies> movies1 = movieRepository.findById(movies.getId());
+            List<Movies> movies1 = movieRepository.findById(movies.getId());
             if(movies1.isEmpty()){
                 System.out.println("yes");
+                movies.setFavourite(1);
                 movies.setUser(user);
                 movieRepository.save(movies);
-            }else{
-                movies1.get().setFavourite(1);
-                movieRepository.save(movies1.get());
+                return "No";
+            }else {
+                for (int i=0;i<movies1.size();i++) {
+                    if (Objects.equals(movies1.get(i).getUser().getUsername(), username)) {
+                        System.out.println("No");
+                        movies1.get(i).setFavourite(1);
+                        movieRepository.save(movies1.get(i));
+                    } else if(i+1 == movies1.size()) {
+                        System.out.println("YES");
+                        movies.setFavourite(1);
+                        movies.setUser(user);
+                        movieRepository.save(movies);
+                    }
+                }
+
             }
             return "success";
+        }catch (Exception e) {
+            System.out.println(e.toString());
+            return "error";
+        }
     }
     public String newWatchingMovie(Movies movies) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-        Optional<Movies> movies1 = movieRepository.findById(movies.getId());
-        if(movies1.isEmpty()){
-            System.out.println("yes");
-            movies.setUser(user);
-            movieRepository.save(movies);
-        }else{
-            movies1.get().setPlaying(1);
-            movieRepository.save(movies1.get());
-        }
-        return "success";
-    }
-    public String deleteWatchlistMovie(Long mId) {
-
         try{
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             String username = auth.getName();
 
             User user = userRepository.findByUsername(username)
                     .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-            Optional<Movies> movies1 = movieRepository.findById(mId);
-            if(movies1.isPresent()){
-                movies1.get().setWatchlist(0);
-                movieRepository.save(movies1.get());
-                return "Yes";
-            }
-            return "error";
-        }catch (Exception e){
-            System.out.println(e);
-            return "error";
-        }
-    }
-    public String deleteFavouriteMovie(Long mId) {
-        try{
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            String username = auth.getName();
-
-            User user = userRepository.findByUsername(username)
-                    .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-            Optional<Movies> movies1 = movieRepository.findById(mId);
-            if(movies1.isPresent()){
-                movies1.get().setFavourite(0);
-                movieRepository.save(movies1.get());
-                return "success";
-            }else{
-                System.out.println(movies1.toString());
-                return "error";
-            }
-        }catch (Exception e){
-            System.out.println(e);
-            return "error";
-        }
-
-    }
-    public String deleteWatchingMovie(Long mId) {
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-        Optional<Movies> movies1 = movieRepository.findById(mId);
-        if(movies1.isPresent()){
-            movies1.get().setPlaying(0);
-            movieRepository.save(movies1.get());
-            return "success";
-        }
-        return "error";
-    }
-
-    public String deleteAllMovie(Long mId) {
-
-        try{
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            String username = auth.getName();
-
-            User user = userRepository.findByUsername(username)
-                    .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-            Optional<Movies> movies1 = movieRepository.findById(mId);
+            List<Movies> movies1 = movieRepository.findById(movies.getId());
             if(movies1.isEmpty()){
-                return "error";
-            }else{
-                if (movies1.get().getWatchlist() == 0 && movies1.get().getFavourite() == 0 && movies1.get().getPlaying() == 0){
-                    movieRepository.deleteById(movies1.get().getUid());
+                System.out.println("yes");
+                movies.setPlaying(1);
+                movies.setUser(user);
+                movieRepository.save(movies);
+                return "No";
+            }else {
+                for (int i=0;i<movies1.size();i++) {
+                    if (Objects.equals(movies1.get(i).getUser().getUsername(), username)) {
+                        System.out.println("No");
+                        movies1.get(i).setPlaying(1);
+                        movieRepository.save(movies1.get(i));
+                    } else if(i+1 == movies1.size()) {
+                        System.out.println("YES");
+                        movies.setPlaying(1);
+                        movies.setUser(user);
+                        movieRepository.save(movies);
+                    }
                 }
-                return "success de;";
+
             }
-        }catch (Exception e){
+            return "success";
+        }catch (Exception e) {
+            System.out.println(e.toString());
             return "error";
         }
+    }
+    public String deleteWatchlistMovie(String mId) {
+
+        try{
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String username = auth.getName();
+
+            User user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+            List<Movies> movies1 = movieRepository.findById(mId);
+            if(!movies1.isEmpty()){
+                for (int i=0;i<movies1.size();i++) {
+                    if (Objects.equals(movies1.get(i).getUser().getUsername(), username)) {
+                        System.out.println("No");
+                        movies1.get(i).setWatchlist(0);
+                        movieRepository.save(movies1.get(i));
+                    }
+                }
+            }
+            return "success";
+        }catch (Exception e) {
+            System.out.println(e.toString());
+            return "error";
+        }
+    }
+    public String deleteFavouriteMovie(String mId) {
+            try{
+                Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+                String username = auth.getName();
+
+                User user = userRepository.findByUsername(username)
+                        .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+                List<Movies> movies1 = movieRepository.findById(mId);
+                if(!movies1.isEmpty()){
+                    for (int i=0;i<movies1.size();i++) {
+                        if (Objects.equals(movies1.get(i).getUser().getUsername(), username)) {
+                            System.out.println("No");
+                            movies1.get(i).setFavourite(0);
+                            movieRepository.save(movies1.get(i));
+                        }
+                    }
+                }
+                return "success";
+            }catch (Exception e) {
+                System.out.println(e.toString());
+                return "error";
+            }
+
+    }
+    public String deleteWatchingMovie(String mId) {
+
+                try{
+                    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+                    String username = auth.getName();
+
+                    User user = userRepository.findByUsername(username)
+                            .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+                    List<Movies> movies1 = movieRepository.findById(mId);
+                    if(!movies1.isEmpty()){
+                        for (int i=0;i<movies1.size();i++) {
+                            if (Objects.equals(movies1.get(i).getUser().getUsername(), username)) {
+                                System.out.println("No");
+                                movies1.get(i).setPlaying(0);
+                                movieRepository.save(movies1.get(i));
+                            }
+                        }
+                    }
+                    return "success";
+                }catch (Exception e) {
+                    System.out.println(e.toString());
+                    return "error";
+                }
+    }
+
+    public String deleteAllMovie(String mId) {
+                    try{
+                        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+                        String username = auth.getName();
+
+                        User user = userRepository.findByUsername(username)
+                                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+                        List<Movies> movies1 = movieRepository.findById(mId);
+                        if(movies1.isEmpty()) {
+                            return "e";
+                        }else{
+                            for (int i=0;i<movies1.size();i++) {
+                                if (Objects.equals(movies1.get(i).getUser().getUsername(), username)) {
+                                    System.out.println("DEL");
+                                    if(movies1.get(i).getWatchlist() == 0 && movies1.get(i).getFavourite() == 0 && movies1.get(i).getPlaying() == 0) {
+                                        System.out.println(movies1.get(i).getId());
+                                        movieRepository.deleteById(movies1.get(i).getUid());
+                                    }
+                                }
+                            }
+                        }
+                        return "success";
+                    }catch (Exception e) {
+                        System.out.println(e.toString());
+                        return "error";
+                    }
     }
 
     public List<Movies> getAllMovies(){
-        return movieRepository.findAll();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+//        User user = userRepository.findByUsername(username)
+//                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+        List<Movies> mv = movieRepository.findAll();
+        List<Movies> mv1 = new ArrayList<>();
+        for (Movies movies : mv) {
+            if (Objects.equals(movies.getUser().getUsername(), username)) {
+                mv1.add(movies);
+            }
+        }
+        System.out.println(mv1.toString());
+        return mv1;
     }
 
 }

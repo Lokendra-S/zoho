@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin(origins = "http://localhost:3000",
         allowCredentials = "true",
@@ -80,8 +81,7 @@ public class UserController {
   public String deleteWatchMovie(@RequestBody String movies){
     JsonObject obj = new Gson().fromJson(movies, JsonObject.class);
     String mName = obj.get("movies").getAsString();
-    Long mv = Long.parseLong(mName);
-    return movieService.deleteWatchlistMovie(mv);
+    return movieService.deleteWatchlistMovie(mName);
   }
 
   @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
@@ -94,8 +94,7 @@ public class UserController {
   public String deleteFavMovie(@RequestBody String movies){
     JsonObject obj = new Gson().fromJson(movies, JsonObject.class);
     String mName = obj.get("movies").getAsString();
-    Long mv = Long.parseLong(mName);
-    return movieService.deleteFavouriteMovie(mv);
+    return movieService.deleteFavouriteMovie(mName);
   }
 
   @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
@@ -108,8 +107,7 @@ public class UserController {
   public String deletePlayMovie(@RequestBody String movies){
     JsonObject obj = new Gson().fromJson(movies, JsonObject.class);
     String mName = obj.get("movies").getAsString();
-    Long mv = Long.parseLong(mName);
-    return movieService.deleteWatchingMovie(mv);
+    return movieService.deleteWatchingMovie(mName);
   }
 
   @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
@@ -122,8 +120,7 @@ public class UserController {
   public String deleteMovie(@RequestBody String movies){
     JsonObject obj = new Gson().fromJson(movies, JsonObject.class);
     String mName = obj.get("movies").getAsString();
-    Long mv = Long.parseLong(mName);
-    return movieService.deleteAllMovie(mv);
+    return movieService.deleteAllMovie(mName);
   }
 
   @PreAuthorize("hasRole('ROLE_USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
