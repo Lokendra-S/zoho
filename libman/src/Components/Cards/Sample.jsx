@@ -16,6 +16,7 @@ import Pagination from './Pagination'
 function Sample() {
   const [search] = useSearchParams()
   const loc = useLocation()
+  console.log(loc)
   
   const navigate = useNavigate()
   const { fetchMovieSearch,movies,searchData } = useContext(BookContext)
@@ -29,46 +30,12 @@ function Sample() {
     }
   },[search.get("name")])
 
-  // useEffect(() => {})
-
   return (
     <>
       <Container fluid className='mt-2'>
         <Container fluid className='px-5 d-flex align-items-center justify-content-between book_head'>
-            <h1 className='fs-3 fw-bold text-center text-uppercase book_headline'>Movies</h1>
-            <Dropdown>
-              <Dropdown.Toggle variant="dark" className='shadow-none' id="dropdown-basic">
-                  Sort By
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                  <Dropdown.Item className='d-flex justify-content-between align-items-center'>
-                      Price
-                      <IconContext.Provider value = {{className:"down_arrow_icon ms-1 my-auto"}}>
-                          <BsArrowDown /> 
-                      </IconContext.Provider>
-                  </Dropdown.Item>
-                  <Dropdown.Item className='d-flex justify-content-between align-items-center'>
-                      Price
-                      <IconContext.Provider value = {{className:"down_arrow_icon ms-1 my-auto"}}>
-                          <BsArrowUp /> 
-                      </IconContext.Provider>
-                  </Dropdown.Item>
-                  <Dropdown.Item className='d-flex justify-content-between align-items-center'>
-                      Rating
-                      <IconContext.Provider value = {{className:"down_arrow_icon ms-1 my-auto"}}>
-                          <BsArrowUp /> 
-                      </IconContext.Provider>
-                  </Dropdown.Item>
-                  <Dropdown.Item className='d-flex justify-content-between align-items-center'>
-                      Rating
-                      <IconContext.Provider value = {{className:"down_arrow_icon ms-1 my-auto"}}>
-                          <BsArrowUp /> 
-                      </IconContext.Provider>
-                  </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Container>
+          <h1 className='fs-3 fw-bold text-center text-uppercase book_headline'>Movies</h1>
+        </Container>
         <Pagination loc={loc} />
       </Container>
     </>

@@ -12,6 +12,7 @@ export const AppContext = ({children}) => {
   const [uname ,setUsername] = useState(localStorage.getItem("user")?localStorage.getItem("user"):'username')
   const [userMovies,setUserMovies] = useState([])
   const [us,setUs] = useState([])
+  const [success,setSuccess] = useState(false)
 
   const [popularMovies,setPopularMovies] = useState([])
   const [popularMoviePages,setPopularMoviePages] = useState(0)
@@ -393,10 +394,11 @@ export const AppContext = ({children}) => {
   }).then(data => {
     if (data.status === 200){
       console.log(data)
+      setSuccess(true)
       allMovies()
     }
   }).catch(e => {
-    alert("Error occured while performing query kindly try again later.")
+    setSuccess(false)
   })
 }
 
@@ -559,6 +561,8 @@ export const AppContext = ({children}) => {
       deleteFavMovie : deleteFavMovie,
       deletePlayMovie : deletePlayMovie,
       deleteAllMovie : deleteAllMovie,
+      success : success,
+      setSuccess : setSuccess,
 
       //search
       fetchMovieSearch : fetchMovieSearch,

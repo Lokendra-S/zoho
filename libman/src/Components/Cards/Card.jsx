@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
     Container,
     Button,
@@ -15,6 +15,7 @@ import im from '../../Images/971.jpg'
 import Login from '../Modals/Login'
 import { BookContext } from '../../Context/App.context'
 import { useNavigate } from 'react-router-dom'
+import SuccessToast from '../Modals/SuccessToast'
 
 function Cards({k,data,s}) {
     const navigate = useNavigate()
@@ -28,8 +29,13 @@ function Cards({k,data,s}) {
         deleteWatchMovie,
         deleteFavMovie,
         deletePlayMovie,
-        allMovies
+        allMovies,
+        success
     } = useContext(BookContext)
+
+    
+
+    //authentication modal
     const [show, setShow] = useState(false);
 
     const handleClose = (
@@ -61,7 +67,6 @@ function Cards({k,data,s}) {
                         playing,
                         bought
                     )
-                    allMovies()
                 }else if(query === "f"){
                     addFavMovie(
                         movieId,
@@ -75,7 +80,6 @@ function Cards({k,data,s}) {
                         playing,
                         bought
                     )
-                    allMovies()
                 }
                 else {
                     addPlayMovie(
@@ -90,8 +94,6 @@ function Cards({k,data,s}) {
                         playing,
                         bought
                     )
-                    navigate(`/movie/${data.id}?name=loki`)
-                    allMovies()
                 }
             }
         }else{
@@ -143,6 +145,7 @@ function Cards({k,data,s}) {
             deletePlayMovie(String(data))
         }
     }
+    //auth end
 
     const mdRating = s === "u" ? parseInt(data.movieRating)  : data.imDbRating ? data.imDbRating : "0"
     const roundM = Math.floor(mdRating)/2

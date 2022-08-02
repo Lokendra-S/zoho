@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useContext } from 'react'
 import {
     Container,
@@ -9,6 +9,7 @@ import { IconContext } from 'react-icons'
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs'
 import { useLocation } from 'react-router-dom'
 import { BookContext } from '../../Context/App.context'
+import SuccessToast from '../Modals/SuccessToast'
 
 import Pagination from './Pagination'
 
@@ -21,9 +22,28 @@ function HomeCard({width}) {
         fetchPopularMovies,
         fetchNowPlayingMovies,
         fetchUpcomingMovies,
-        allMovies
+        allMovies,
+        success,
+        setSuccess
     } = useContext(BookContext)
+    
+    //toast
+    const [showA, setShowA] = useState(false);
+    
+    const toastShow = () => setShowA(true)
+    const toastClose = () => {
+        setSuccess(false)
+        setShowA(false)
+    }
 
+    useEffect(()=>{
+        if(success === true){
+            toastShow()
+            console.log("first")
+        }
+    },[success])
+
+    //toast end
     useEffect(()=>{
         if(loc==="/toprated"){
             fetchTopRatedMovies()
@@ -74,6 +94,10 @@ function HomeCard({width}) {
             }
         </Container>
         <Pagination loc={loc} />
+        <SuccessToast
+            showA={showA}
+            toastClose={toastClose}
+        />
     </Container>
   )
 }

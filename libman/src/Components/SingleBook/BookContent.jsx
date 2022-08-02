@@ -10,7 +10,7 @@ import {
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { IconContext } from 'react-icons'
-import { BsStarFill,BsCartPlus,BsStarHalf,BsStar } from 'react-icons/bs'
+import { BsStarFill,BsCartPlus,BsStarHalf,BsStar,BsFillPlayCircleFill } from 'react-icons/bs'
 import { IoWalletOutline,IoHeartOutline } from 'react-icons/io5'
 import { BookContext } from '../../Context/App.context'
 
@@ -22,9 +22,9 @@ import { useLocation } from 'react-router-dom';
 function BookContent() {
 
     const loc = useLocation()
-    const cLoc = loc.search && loc.search.split("=").pop()
+    // const cLoc = loc.search && loc.search.split("=").pop()
     const currLoc = loc.pathname.split("/").pop()
-    console.log(cLoc,currLoc)
+    // console.log(currLoc)
 
     const {
         fetchSingleMovieSearch,
@@ -44,38 +44,20 @@ function BookContent() {
         videos
     } = useContext(BookContext)
 
-    const [mute,setMute] = useState(true)
-
-    const toggleMute = () => {
-        // setMute(!mute)
-        console.log("first")
-    }
-
-    // useEffect(()=>{
-    //     fetchSingleMovieSearch(currLoc)
-    //     fetchSingleMovieDesc(currLoc)
-    //     fetchSingleMovieReviews(currLoc)
-    //     fetchSingleMovieCast(currLoc)
-    //     fetchSingleMovieRatings(currLoc)
-    //     fetchSingleMoviePosters(currLoc)
-    //     fetchSingleMovieImages(currLoc)
-    //     fetchSingleMovieVideos(currLoc)
-    // },[currLoc])
+    useEffect(()=>{
+        fetchSingleMovieSearch(currLoc)
+        fetchSingleMovieDesc(currLoc)
+        fetchSingleMovieReviews(currLoc)
+        fetchSingleMovieCast(currLoc)
+        fetchSingleMovieRatings(currLoc)
+        fetchSingleMoviePosters(currLoc)
+        fetchSingleMovieImages(currLoc)
+        fetchSingleMovieVideos(currLoc)
+    },[currLoc])
 
   return (
     <Container className='single_book_container my-4 p-0'>
-        {cLoc && 
-            <Container fluid xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="p-0 m-0">
-                <Container fluid className="m-0 my-4 p-0 w-100 h-100 d-flex align-items-center justify-content-center videoContainerMain">
-                    <video
-                        autoPlay
-                        src={vid}
-                        className={"videoMain"}
-                    ></video>
-                </Container>
-            </Container>
-        }
-      {/* { (movieData && movieDesc && cast && ratings && posters && images && videos)?
+      { (movieData && movieDesc && cast && ratings && posters && images && videos)?
           <Row className='gap-1 d-flex justify-content-center align-items-center'>
               <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="my-lg-1 shadow mx-1 ">
                   <Card className='w-100 border-0 p-xs-1 p-lg-0'>
@@ -88,9 +70,6 @@ function BookContent() {
                                   <Container fluid className='p-0'>
                                       <Card.Title className='fs-5'>{movieData.title}</Card.Title>
                                       <Card.Title className='fs-6'></Card.Title>
-                                  </Container>
-                                  <Container fluid className='p-0'>
-                                      <Card.Title className='fs-5 fw-bold'><sub>$</sub>57<sup>.00</sup></Card.Title>
                                   </Container>
                               </Container>
                               <Card.Text className='single_book_text'>
@@ -123,9 +102,9 @@ function BookContent() {
                                   </Button>
                                   <Button variant="dark" className='fs-6 buy_btn shadow-none d-flex justify-content-center align-items-center text-uppercase'>
                                       <IconContext.Provider value = {{className:"cart_icon1 fs-4 me-2"}}>
-                                          <IoWalletOutline/> 
+                                        <BsFillPlayCircleFill/> 
                                       </IconContext.Provider>
-                                      <p className='mb-0 buy_text'>buy now</p>
+                                      <p className='mb-0 buy_text'>Play</p>
                                   </Button>
                               </Container>
                           </Container>
@@ -223,7 +202,7 @@ function BookContent() {
           </Row>
           :
           <p>LOADING</p>
-      } */}
+      }
     </Container>
 
   )

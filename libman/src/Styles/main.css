@@ -354,9 +354,9 @@ sup{
     background-color: #011627 !important;
 }
 .videoMain{
-    aspect-ratio: 16/9 !important;
-    max-height: 100% !important;
-    max-width: 100% !important;
+    /* aspect-ratio: 16/9 !important; */
+    /* max-height: 100% !important;
+    max-width: 100% !important; */
 }
 
 /*   */
@@ -575,6 +575,10 @@ sup{
         -webkit-line-clamp: 3;
         overflow: hidden;
     }
+    .videoContainerMain{
+        height: 60vh !important;
+        background-color: #011627 !important;
+    }
 }
 @media only screen and (min-width:992px) and (max-width:1140px){
     .card_img_container .heart_btn{
@@ -602,6 +606,10 @@ sup{
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 3;
         overflow: hidden;
+    }
+    .videoContainerMain{
+        height: 60vh !important;
+        background-color: #011627 !important;
     }
 }
 @media only screen and (min-width:1400px) and (max-width:1501px){
