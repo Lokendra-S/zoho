@@ -348,6 +348,19 @@ sup{
 }
 /*---------------------------   SINGLE BOOK       ---------------------------------------*/
 
+/*    */
+.videoContainerMain{
+    height: 60vh !important;
+    background-color: #011627 !important;
+}
+.videoMain{
+    aspect-ratio: 16/9 !important;
+    max-height: 100% !important;
+    max-width: 100% !important;
+}
+
+/*   */
+
 @media only screen and (min-width:350px) and (max-width:577px){
     .app_name{
         font-size: 2rem !important;

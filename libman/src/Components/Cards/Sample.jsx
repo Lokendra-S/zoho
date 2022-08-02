@@ -1,9 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { BookContext } from '../../Context/App.context'
-// import React, { useEffect } from 'react'
-// import { useState } from 'react'
-// import { useContext } from 'react'
 import {
     Container,
     Dropdown,

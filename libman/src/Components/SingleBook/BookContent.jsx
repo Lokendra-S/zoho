@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useEffect } from 'react'
 import { 
     Card, 
@@ -16,10 +16,15 @@ import { BookContext } from '../../Context/App.context'
 
 import ReviewPag from './ReviewPag'
 import im from '../../Images/971.jpg'
+import vid from '../../Images/vid.mp4'
+import { useLocation } from 'react-router-dom';
 
 function BookContent() {
 
-    const currLoc = window.location.pathname.split("/").pop()
+    const loc = useLocation()
+    const cLoc = loc.search && loc.search.split("=").pop()
+    const currLoc = loc.pathname.split("/").pop()
+    console.log(cLoc,currLoc)
 
     const {
         fetchSingleMovieSearch,
@@ -39,20 +44,38 @@ function BookContent() {
         videos
     } = useContext(BookContext)
 
-    useEffect(()=>{
-        fetchSingleMovieSearch(currLoc)
-        fetchSingleMovieDesc(currLoc)
-        fetchSingleMovieReviews(currLoc)
-        fetchSingleMovieCast(currLoc)
-        fetchSingleMovieRatings(currLoc)
-        fetchSingleMoviePosters(currLoc)
-        fetchSingleMovieImages(currLoc)
-        fetchSingleMovieVideos(currLoc)
-    },[currLoc])
+    const [mute,setMute] = useState(true)
+
+    const toggleMute = () => {
+        // setMute(!mute)
+        console.log("first")
+    }
+
+    // useEffect(()=>{
+    //     fetchSingleMovieSearch(currLoc)
+    //     fetchSingleMovieDesc(currLoc)
+    //     fetchSingleMovieReviews(currLoc)
+    //     fetchSingleMovieCast(currLoc)
+    //     fetchSingleMovieRatings(currLoc)
+    //     fetchSingleMoviePosters(currLoc)
+    //     fetchSingleMovieImages(currLoc)
+    //     fetchSingleMovieVideos(currLoc)
+    // },[currLoc])
 
   return (
     <Container className='single_book_container my-4 p-0'>
-      { (movieData && movieDesc && cast && ratings && posters && images && videos)?
+        {cLoc && 
+            <Container fluid xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="p-0 m-0">
+                <Container fluid className="m-0 my-4 p-0 w-100 h-100 d-flex align-items-center justify-content-center videoContainerMain">
+                    <video
+                        autoPlay
+                        src={vid}
+                        className={"videoMain"}
+                    ></video>
+                </Container>
+            </Container>
+        }
+      {/* { (movieData && movieDesc && cast && ratings && posters && images && videos)?
           <Row className='gap-1 d-flex justify-content-center align-items-center'>
               <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className="my-lg-1 shadow mx-1 ">
                   <Card className='w-100 border-0 p-xs-1 p-lg-0'>
@@ -200,7 +223,7 @@ function BookContent() {
           </Row>
           :
           <p>LOADING</p>
-      }
+      } */}
     </Container>
 
   )

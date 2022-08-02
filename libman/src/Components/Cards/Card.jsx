@@ -90,6 +90,7 @@ function Cards({k,data,s}) {
                         playing,
                         bought
                     )
+                    navigate(`/movie/${data.id}?name=loki`)
                     allMovies()
                 }
             }
@@ -285,20 +286,23 @@ function Cards({k,data,s}) {
                                     data.playing ? 
                                         () => handleDelete(2,data.id)
                                     :
-                                    ()=>handleClick(
-                                        data.id,
-                                        data.image,
-                                        data.title,
-                                        data.directors?data.directors:
-                                            data.crew ? data.crew.slice(0,data.crew.indexOf("(")) : "",
-                                        data.releaseState ? data.releaseState : data.year,
-                                        data.imDbRating ? String(data.imDbRating) : "N/A",
-                                        0,
-                                        0,
-                                        0,
-                                        1,
-                                        "p"
-                                    )}
+                                    ()=>{
+                                        handleClick(
+                                            data.id,
+                                            data.image,
+                                            data.title,
+                                            data.directors?data.directors:
+                                                data.crew ? data.crew.slice(0,data.crew.indexOf("(")) : "",
+                                            data.releaseState ? data.releaseState : data.year,
+                                            data.imDbRating ? String(data.imDbRating) : "N/A",
+                                            0,
+                                            0,
+                                            0,
+                                            1,
+                                            "p"
+                                        )
+                                    }
+                                }
                             >
                                 {data.playing ? 
                                     data.playing === 1 ?

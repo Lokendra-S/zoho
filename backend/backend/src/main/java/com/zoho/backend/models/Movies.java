@@ -62,7 +62,6 @@ public class Movies {
     }
 
     public void setUid(Long uid) {
-        uid = uid;
     }
 
     public String getId() {

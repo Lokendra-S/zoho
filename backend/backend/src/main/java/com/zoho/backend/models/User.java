@@ -1,5 +1,7 @@
 package com.zoho.backend.models;
 
+import org.hibernate.annotations.Cascade;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,7 +40,8 @@ public class User {
              inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
 
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "movies_uid")
   private Set<Movies> movies;
 
   public User() {

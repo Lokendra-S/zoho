@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap'
 import { FiSearch,FiShoppingCart,FiHeart } from 'react-icons/fi'
 import { IconContext } from 'react-icons'
-import { MdLogout } from 'react-icons/md'
+import { MdLogout,MdLogin } from 'react-icons/md'
 import { BiEditAlt } from 'react-icons/bi'
 import { AiOutlineAppstoreAdd } from 'react-icons/ai'
 import { NavLink, useNavigate } from 'react-router-dom'
@@ -66,45 +66,29 @@ function NavHead({
                             <Dropdown.Toggle className='d-flex justify-content-center align-items-center userName shadow-none' id="dropdown-basic">
                                 <p className='mb-0 userName_p'>{uname}</p>
                             </Dropdown.Toggle>
+                            { uname !== "username" ? 
+                                <Dropdown.Menu>
+                                    <Dropdown.Item className='d-flex justify-content-start align-items-center'>
+                                        <NavLink className='text-uppercase px-3 nav-link nav-link-drop' to='/profile'>
+                                            <IconContext.Provider value = {{className:"wishlist_icon me-2 my-auto"}}>
+                                                <AiOutlineAppstoreAdd /> 
+                                            </IconContext.Provider>
+                                            My Movies
+                                        </NavLink>
+                                    </Dropdown.Item>
+                                    <Dropdown.Item className='mt-2 px-3 d-flex justify-content-start align-items-center text-center text-uppercase w-100 logout_btn'
+                                            onClick={() => userLogOut()}
+                                        >
+                                            <IconContext.Provider value = {{className:"log_out_icon me-2 my-auto"}}>
+                                                <MdLogout /> 
+                                            </IconContext.Provider>
+                                            Log Out
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
+                                :
+                                <></>
+                            }
 
-                            <Dropdown.Menu>
-                                <Dropdown.Item className='d-flex justify-content-start align-items-center'>
-                                    <IconContext.Provider value = {{className:"edit_icon fs-6 me-2 my-auto"}}>
-                                        <BiEditAlt /> 
-                                    </IconContext.Provider>
-                                    Edit Profile
-                                </Dropdown.Item>
-                                {/* <Dropdown.Item className='d-flex justify-content-start align-items-center'>
-                                    <IconContext.Provider value = {{className:"book_icon me-2 my-auto"}}>
-                                        <FiBook /> 
-                                    </IconContext.Provider>
-                                    Become Author
-                                </Dropdown.Item> */}
-                                {/* <Dropdown.Item className='d-flex justify-content-start align-items-center'>
-                                    <NavLink className='text-uppercase px-3 nav-link nav-link-drop' to='/:id/cart'>
-                                        <IconContext.Provider value = {{className:"cart_icon me-2 my-auto"}}>
-                                            <FiShoppingCart /> 
-                                        </IconContext.Provider>
-                                        Cart
-                                    </NavLink>
-                                </Dropdown.Item> */}
-                                <Dropdown.Item className='d-flex justify-content-start align-items-center'>
-                                    <NavLink className='text-uppercase px-3 nav-link nav-link-drop' to='/profile'>
-                                        <IconContext.Provider value = {{className:"wishlist_icon me-2 my-auto"}}>
-                                            <AiOutlineAppstoreAdd /> 
-                                        </IconContext.Provider>
-                                        My Movies
-                                    </NavLink>
-                                </Dropdown.Item>
-                                <Dropdown.Item className='mt-2 px-3 d-flex justify-content-start align-items-center text-center text-uppercase w-100 logout_btn'
-                                    onClick={() => userLogOut()}
-                                >
-                                    <IconContext.Provider value = {{className:"log_out_icon me-2 my-auto"}}>
-                                        <MdLogout /> 
-                                    </IconContext.Provider>
-                                    Log out
-                                </Dropdown.Item>
-                            </Dropdown.Menu>
                         </Dropdown>
                     </Nav>
                 </Container>

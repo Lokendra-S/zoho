@@ -50,10 +50,11 @@ public class AdminService {
 
     @Transactional
     public String removeUser(){
-        String user = "aaa";
-        Optional<User> user1 = userRepository.deleteByUsername(user);
+        String user = "bbb";
+        Optional<User> user1 = userRepository.findByUsername(user);
+
 //        System.out.println(user1.get().getUsername());
-        System.out.println(user1.get());
+        userRepository.deleteByUsername(user1.get().getUsername());
         return "yes";
     }
 }

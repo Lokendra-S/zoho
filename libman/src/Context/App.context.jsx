@@ -11,6 +11,7 @@ export const AppContext = ({children}) => {
   const [isLoggedIn,setIsLoggedIn] = useState(true)
   const [uname ,setUsername] = useState(localStorage.getItem("user")?localStorage.getItem("user"):'username')
   const [userMovies,setUserMovies] = useState([])
+  const [us,setUs] = useState([])
 
   const [popularMovies,setPopularMovies] = useState([])
   const [popularMoviePages,setPopularMoviePages] = useState(0)
@@ -211,6 +212,7 @@ export const AppContext = ({children}) => {
     }).then(data => {
       if (data.status === 200){
         setIsLoggedIn(false)
+        setUs(data.data)
         setUsername(username)
         localStorage.setItem("user",username)
         console.log(data)

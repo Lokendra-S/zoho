@@ -5,7 +5,6 @@ import AdminHome from './Admin/AdminHome'
 
 import HomeCard from './Cards/HomeCard'
 import Sample from './Cards/Sample'
-import CartHome from './Cart/CartHome'
 import Footer from './Footer/Footer'
 import Header from './NavBar/Header'
 import BookContent from './SingleBook/BookContent'
