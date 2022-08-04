@@ -13,6 +13,7 @@ function Pagination({loc}) {
     const { movies,userMovies,popularPages,searchData } = useContext(BookContext)
 
     const [ pageNumber, setPageNumber ] = useState(0)
+    const [ text, setText ] = useState("")
 
     useEffect(()=>{
         setPageNumber(0)
@@ -39,9 +40,18 @@ function Pagination({loc}) {
         setPageNumber(selected)
     }
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+          if(renderer.length === 0){
+            setText("Movie List is empty.")
+          }
+        }, 4000);
+        return () => clearTimeout(timer);
+    }, []);
+
   return (
     <>
-    { renderer.length > 1 ?   
+    { renderer.length > 0 ?   
         <>
             <Container fluid className='mt-3 px-4'>
                 <Row>
@@ -76,7 +86,11 @@ function Pagination({loc}) {
         </>  
         :
         <Container fluid className='text-center my-5' >
-            <Spinner animation='grow' size='lg'/>
+            {text ?
+                <p className='fs-5 fw-bold'>{text}</p>
+                : 
+                <Spinner animation='grow' size='lg'/>
+            }
         </Container>
     }
     </>

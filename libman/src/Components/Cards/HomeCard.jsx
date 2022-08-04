@@ -32,14 +32,13 @@ function HomeCard({width}) {
     
     const toastShow = () => setShowA(true)
     const toastClose = () => {
-        setSuccess(false)
+        setSuccess(null)
         setShowA(false)
     }
 
     useEffect(()=>{
-        if(success === true){
+        if(success !== null){
             toastShow()
-            console.log("first")
         }
     },[success])
 
@@ -97,6 +96,7 @@ function HomeCard({width}) {
         <SuccessToast
             showA={showA}
             toastClose={toastClose}
+            success = {success}
         />
     </Container>
   )

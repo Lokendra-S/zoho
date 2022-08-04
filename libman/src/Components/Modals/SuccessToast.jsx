@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
 import { ToastContainer } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import Toast from 'react-bootstrap/Toast';
 
 function SuccessToast({
     showA,
-    toastClose
+    toastClose,
+    success
 }) {
     
     return (
-      <Row>
-        <Col md={6} className="mb-2">
-        <ToastContainer position='top-end'>
-            <Toast show={showA} onClose={toastClose} >
+        <ToastContainer position='bottom-end' className='position-fixed' >
+            <Toast show={showA} onClose={toastClose} autohide delay={2000}>
                 <Toast.Header>
                 <img
                     src="holder.js/20x20?text=%20"
@@ -22,13 +18,16 @@ function SuccessToast({
                     alt=""
                 />
                 <strong className="me-auto">iMoviez</strong>
-                {/* <small>11 mins ago</small> */}
+                <small>11 mins ago</small>
                 </Toast.Header>
-                <Toast.Body>Movie Query Is Performed Successfully</Toast.Body>
+                <Toast.Body>
+                    { success === true ?
+                        "Movie Query Is Performed Successfully":
+                        "Movie Query Isn't Performed Successfully"
+                    }
+                </Toast.Body>
             </Toast>
         </ToastContainer>
-        </Col>
-      </Row>
     );
 }
 

@@ -349,16 +349,28 @@ sup{
 /*---------------------------   SINGLE BOOK       ---------------------------------------*/
 
 /*    */
-.videoContainerMain{
-    height: 60vh !important;
-    background-color: #011627 !important;
-}
-.videoMain{
-    /* aspect-ratio: 16/9 !important; */
-    /* max-height: 100% !important;
-    max-width: 100% !important; */
-}
 
+.image{
+    position: relative;
+}
+.ratingText{
+    position: absolute;
+    right: 5% !important;
+    top: 3% !important;
+    background : linear-gradient(135deg,rgba(255,255,255,0.3),rgba(255,255,255,0.2)) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+    border: 1px solid rgba(255, 255, 255, 0.10) !important;
+}
+.imageContainer{
+    aspect-ratio: 3/2 !important;
+}
+.image{
+    width: 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+}
 /*   */
 
 @media only screen and (min-width:350px) and (max-width:577px){

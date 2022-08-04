@@ -1,11 +1,13 @@
 package com.zoho.backend.models;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "movies")
 @Table(name = "movies")
 public class Movies {
-//    @Column(name = "id")
     @Id
     @Column(name="uid")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -38,7 +40,8 @@ public class Movies {
     @Column(name = "buy_status")
     private int bought;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     User user;
     public Movies() {
     }

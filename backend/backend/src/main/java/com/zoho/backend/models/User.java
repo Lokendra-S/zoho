@@ -10,7 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-@Entity
+@Entity(name = "users")
 @Table(name = "users",
        uniqueConstraints = {
            @UniqueConstraint(columnNames = "username"),
@@ -40,8 +40,8 @@ public class User {
              inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
 
-  @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "movies_uid")
+  @OneToMany( cascade = CascadeType.REMOVE, orphanRemoval = true, mappedBy = "user")
+  @Cascade(org.hibernate.annotations.CascadeType.DELETE)
   private Set<Movies> movies;
 
   public User() {

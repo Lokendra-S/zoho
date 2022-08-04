@@ -1,17 +1,17 @@
 package com.zoho.backend.controllers;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.zoho.backend.models.Movies;
 import com.zoho.backend.models.User;
 import com.zoho.backend.security.services.AdminService;
 import com.zoho.backend.security.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000",
@@ -30,22 +30,28 @@ public class AdminController {
         return adminService.allMovies();
     }
 
-    @GetMapping("/movies")
+    @PostMapping("/movies")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<Movies> userMovies() {
-        return adminService.allUserMovies();
+    public List<Movies> userMovies(@RequestBody String user) {
+        JsonObject obj = new Gson().fromJson(user, JsonObject.class);
+        String uName = obj.get("user").getAsString();
+        return adminService.allUserMovies(uName);
     }
 
-    @GetMapping("/movieslength")
+    @PostMapping("/movieslength")
     @PreAuthorize("hasRole('ADMIN')")
-    public int userMoviesLength() {
-        return adminService.allUserMoviesLength();
+    public List<Integer> userMoviesLength(@RequestBody String user) {
+        JsonObject obj = new Gson().fromJson(user, JsonObject.class);
+        String uName = obj.get("user").getAsString();
+        return adminService.allUserMoviesLength(uName);
     }
 
-//    @Transactional
-    @GetMapping("/deleteuser")
+    @Transactional
+    @PostMapping("/deleteuser")
     @PreAuthorize("hasRole('ADMIN')")
-    public String deleteUser() {
-        return adminService.removeUser();
+    public String deleteUser(@RequestBody String user) {
+        JsonObject obj = new Gson().fromJson(user, JsonObject.class);
+        String uName = obj.get("user").getAsString();
+        return adminService.removeUser(uName);
     }
 }

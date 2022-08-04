@@ -4,41 +4,6 @@ import React,{ useState,useEffect,createContext } from 'react'
 export const BookContext = createContext()
 
 export const AppContext = ({children}) => {
-
-  /*
-    User
-  */
-  const [isLoggedIn,setIsLoggedIn] = useState(true)
-  const [uname ,setUsername] = useState(localStorage.getItem("user")?localStorage.getItem("user"):'username')
-  const [userMovies,setUserMovies] = useState([])
-  const [us,setUs] = useState([])
-  const [success,setSuccess] = useState(false)
-
-  const [popularMovies,setPopularMovies] = useState([])
-  const [popularMoviePages,setPopularMoviePages] = useState(0)
-  const [currPage,setCurrPage] = useState("0")
-
-  useEffect(() => {
-    const userUpdate = () => {
-      const user = localStorage.getItem("user")
-      if(user){
-        setUsername(user)
-      }
-    }
-
-    window.addEventListener('storage',userUpdate)
-  
-    return () => {
-      window.removeEventListener('storage',userUpdate)
-    }
-  }, [])
-
-  useEffect(() => {
-    setUsername(uname)
-    console.log(uname)
-  },[uname])
-  
-
   /* 
     Single Movie Starts
   */
@@ -155,6 +120,14 @@ export const AppContext = ({children}) => {
     Single Movie Ends  
   */
 
+  /*
+    BATCH MOVIES START  
+  */
+
+  const [popularMovies,setPopularMovies] = useState([])
+  const [popularMoviePages,setPopularMoviePages] = useState(0)
+  const [currPage,setCurrPage] = useState("0")
+
   const fetchPopularMovies = async() => {
     await axios.get("http://localhost:8080/api/movie/popular")
     .then((data)=>{
@@ -198,6 +171,40 @@ export const AppContext = ({children}) => {
   const CurrPage = () => {
     setCurrPage(1)
   }
+
+  /* 
+    BATCH MOVIE END
+  */
+
+  /*
+    USER QUERIES
+  */
+
+  const [isLoggedIn,setIsLoggedIn] = useState(true)
+  const [uname ,setUsername] = useState(localStorage.getItem("user")?localStorage.getItem("user"):'username')
+  const [userMovies,setUserMovies] = useState([])
+  const [us,setUs] = useState([])
+  const [success,setSuccess] = useState(null)
+
+  useEffect(() => {
+    const userUpdate = () => {
+      const user = localStorage.getItem("user")
+      if(user){
+        setUsername(user)
+      }
+    }
+
+    window.addEventListener('storage',userUpdate)
+  
+    return () => {
+      window.removeEventListener('storage',userUpdate)
+    }
+  }, [])
+  
+  useEffect(() => {
+    setUsername(uname)
+    console.log(uname)
+  },[uname])
 
   const userLogin = async(username, password) => {
     await axios.post("http://localhost:8080/api/auth/signin",{
@@ -284,10 +291,12 @@ export const AppContext = ({children}) => {
     }).then(data => {
       if (data.status === 200){
         console.log(data)
+        setSuccess(true) 
         deleteAllMovie(movieId)
       }
     }).catch(e => {
-      alert("Error occured while performing query kindly try again later.")
+      setSuccess(false)
+      // alert("Error occured while performing query kindly try again later.")
     })
   }
 
@@ -307,10 +316,12 @@ export const AppContext = ({children}) => {
     }).then(data => {
       if (data.status === 200){
         console.log(data)
+        setSuccess(true)
         deleteAllMovie(movieId)
       }
     }).catch(e => {
-      alert("Error occured while performing query kindly try again later.")
+      setSuccess(false)
+      // alert("Error occured while performing query kindly try again later.")
     })
   }
 
@@ -331,9 +342,11 @@ export const AppContext = ({children}) => {
       if (data.status === 200){
         console.log(data)
         deleteAllMovie(movieId)
+        setSuccess(true)
       }
     }).catch(e => {
-      alert("Error occured while performing query kindly try again later.")
+      setSuccess(false)
+      // alert("Error occured while performing query kindly try again later.")
     })
   }
 
@@ -437,10 +450,12 @@ export const AppContext = ({children}) => {
       if (data.status === 200){
         console.log(data)
         allMovies()
+        setSuccess(true)
       }
     }).catch(e => {
-      console.log(e.message)
-      alert("Error occured while performing query kindly try again later.")
+      setSuccess(false)
+      // console.log(e.message)
+      // alert("Error occured while performing query kindly try again later.")
     })
   }
 
@@ -479,9 +494,11 @@ export const AppContext = ({children}) => {
     if (data.status === 200){
       console.log(data)
       allMovies()
+      setSuccess(true)
     }
   }).catch(e => {
-    alert("Error occured while performing query kindly try again later.")
+    setSuccess(false)
+    // alert("Error occured while performing query kindly try again later.")
   })
   }
 
@@ -495,6 +512,7 @@ export const AppContext = ({children}) => {
       withCredentials: true
     }).then(data => {
       if (data.status === 200){
+        console.log(data.data)
         setUserMovies(data.data)
         setPopularMoviePages(data.data.length)
       }
@@ -512,6 +530,109 @@ export const AppContext = ({children}) => {
   useEffect(()=>{
     getToken()
   },[])
+
+  /*
+    USER QUERIES END
+  */
+
+  /* 
+    ADMIN QUERIES START
+  */
+
+  const [ users,setUsers ] = useState([])
+  const [ userhMovieLength,setUserMovieLength ] = useState([])
+  const [ userMoviesInd,setUserMoviesInd ] = useState([])
+
+  // useEffect(() => {
+  //   console.log(users,userhMovieLength,wishlistLen,favouriteLen,playingLen)
+  // },[users,userhMovieLength,wishlistLen,favouriteLen,playingLen])
+
+  // useEffect(()=>{
+  //   setUsers(users)
+  // },[users])
+
+  const allUsers = async() => {
+    axios.get("http://localhost:8080/api/admin/home",{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        // console.log(data)
+        setUsers(data.data)
+      }
+    }).catch(e => {
+      alert("Error occured while performing query kindly try again later."+e.message)
+    })
+  }
+
+  const UserMoviesind = (user) => {
+    axios.post("http://localhost:8080/api/admin/movies",{
+      user : user
+    },{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        console.log(data.data)
+        setUserMoviesInd(data.data)
+      }
+    }).catch(e => {
+      alert("Error occured while performing query kindly try again later."+e.message)
+    })
+  }
+
+  const deleteUserDb = (user) => {
+    axios.post("http://localhost:8080/api/admin/deleteuser",{
+      user : user
+    },{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        console.log(data.data)
+        allUsers()
+      }
+    }).catch(e => {
+      alert("Error occured while performing query kindly try again later."+e.message)
+    })
+  }
+
+  const UserMoviesLength = (user) => {
+    axios.post("http://localhost:8080/api/admin/movieslength",{
+      user : user
+    },{
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin" : "http://localhost:8080",
+        "Access-Control-Allow-Credentials" : true
+      },
+      withCredentials: true
+    }).then(data => {
+      if (data.status === 200){
+        console.log(user)
+        setUserMovieLength((curr => [...curr,(data.data)]))
+      }
+    }).catch(e => {
+      alert("Error occured while performing query kindly try again later."+e.message)
+    })
+  }
+
+  
+  /*
+    ADMIN QUERIES END
+  */
 
   return (
     <BookContext.Provider value={{
@@ -566,7 +687,14 @@ export const AppContext = ({children}) => {
 
       //search
       fetchMovieSearch : fetchMovieSearch,
-      searchData : searchData
+      searchData : searchData,
+
+      //admin
+      allUsers : allUsers,
+      users : users,
+      UserMoviesind : UserMoviesind,
+      userMoviesInd : userMoviesInd,
+      deleteUserDb : deleteUserDb
     }}>
       {children}
     </BookContext.Provider>

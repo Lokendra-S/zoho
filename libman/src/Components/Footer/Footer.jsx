@@ -36,7 +36,7 @@ function Footer() {
         <Col xs={12} sm={12} md={12} lg={4} xl={4} xxl={4} className='copyright my-auto'>
           <p className='fs-6 fs-normal mb-0'>2022. All Rights Reserved @ Lokendra_S</p>
         </Col>
-        <Col xs={12} sm={12} md={6} lg={4} xl={4} xxl={4} className="botton_nav d-flex justify-content-center my-auto">
+        <Col xs={12} sm={12} md={6} lg={4} xl={4} xxl={4} className="botton_nav d-flex justify-content-center my-auto gap-2">
           <Nav.Item className='text-uppercase text-dark'>
             <Nav.Link href="#home" className='text-dark'>home</Nav.Link>
           </Nav.Item>

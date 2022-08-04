@@ -24,8 +24,7 @@ public class AdminService {
         return userRepository.findAll();
     }
 
-    public List<Movies> allUserMovies(){
-        String user = "bbb";
+    public List<Movies> allUserMovies(String user){
         List<Movies> mv = movieRepository.findAll();
         List<Movies> usermv = new ArrayList<>();
         for (Movies movies:mv) {
@@ -36,25 +35,35 @@ public class AdminService {
         return usermv;
     }
 
-    public int allUserMoviesLength(){
-        String user = "bbb";
+    public List<Integer> allUserMoviesLength(String user){
         List<Movies> mv = movieRepository.findAll();
-        List<Movies> usermv = new ArrayList<>();
+        List<Integer> usermv = new ArrayList<>();
+        int all=0,wish=0,fav=0,play=0;
         for (Movies movies:mv) {
             if (Objects.equals(movies.getUser().getUsername(), user)){
-                usermv.add(movies);
+                all++;
+                if(Objects.equals(movies.getWatchlist(),1)){
+                    wish++;
+                }
+                if(Objects.equals(movies.getFavourite(),1)){
+                    fav++;
+                }
+                if(Objects.equals(movies.getPlaying(),1)){
+                    play++;
+                }
             }
         }
-        return usermv.size();
+        usermv.add(all);
+        usermv.add(wish);
+        usermv.add(fav);
+        usermv.add(play);
+        return usermv;
     }
 
-    @Transactional
-    public String removeUser(){
-        String user = "bbb";
-        Optional<User> user1 = userRepository.findByUsername(user);
 
-//        System.out.println(user1.get().getUsername());
-        userRepository.deleteByUsername(user1.get().getUsername());
+    public String removeUser(String user){
+        Optional<User> user1 = userRepository.findByUsername(user);
+        userRepository.deleteById(user1.get().getId());
         return "yes";
     }
 }

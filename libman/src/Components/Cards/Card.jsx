@@ -33,8 +33,6 @@ function Cards({k,data,s}) {
         success
     } = useContext(BookContext)
 
-    
-
     //authentication modal
     const [show, setShow] = useState(false);
 
