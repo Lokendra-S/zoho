@@ -370,6 +370,8 @@ sup{
     width: 100% !important;
     max-width: 100% !important;
     min-width: 100% !important;
+    aspect-ratio: 2/3 !important;
+    border-radius: 0.3rem !important;
 }
 /*   */
 

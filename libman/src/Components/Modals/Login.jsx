@@ -8,8 +8,6 @@ import {
     Tabs
 } from 'react-bootstrap'
 
-import Icon from './Icon';
-
 function Login({
         userLogin,
         userSignUp,

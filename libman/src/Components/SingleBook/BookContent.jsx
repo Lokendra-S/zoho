@@ -11,12 +11,9 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { IconContext } from 'react-icons'
 import { BsStarFill,BsCartPlus,BsStarHalf,BsStar,BsFillPlayCircleFill } from 'react-icons/bs'
-import { IoWalletOutline,IoHeartOutline } from 'react-icons/io5'
 import { BookContext } from '../../Context/App.context'
 
 import ReviewPag from './ReviewPag'
-import im from '../../Images/971.jpg'
-import vid from '../../Images/vid.mp4'
 import { useLocation } from 'react-router-dom';
 
 function BookContent() {
@@ -24,7 +21,6 @@ function BookContent() {
     const loc = useLocation()
     // const cLoc = loc.search && loc.search.split("=").pop()
     const currLoc = loc.pathname.split("/").pop()
-    // console.log(currLoc)
 
     const {
         fetchSingleMovieSearch,

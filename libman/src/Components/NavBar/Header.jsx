@@ -14,7 +14,9 @@ function Header({width}) {
           width={width} 
           userLogOut={userLogOut} 
         />
-        <NavLinks/>
+        <NavLinks
+          username={width}
+        />
         <AlphaNavLinks/>
     </>
   )

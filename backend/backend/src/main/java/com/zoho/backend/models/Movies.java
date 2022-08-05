@@ -1,5 +1,6 @@
 package com.zoho.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -39,6 +40,7 @@ public class Movies {
     private int playing;
     @Column(name = "buy_status")
     private int bought;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

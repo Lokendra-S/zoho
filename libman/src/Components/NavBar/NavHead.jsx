@@ -9,10 +9,9 @@ import {
     Nav,
 
 } from 'react-bootstrap'
-import { FiSearch,FiShoppingCart,FiHeart } from 'react-icons/fi'
+import { FiSearch } from 'react-icons/fi'
 import { IconContext } from 'react-icons'
-import { MdLogout,MdLogin } from 'react-icons/md'
-import { BiEditAlt } from 'react-icons/bi'
+import { MdLogout } from 'react-icons/md'
 import { AiOutlineAppstoreAdd } from 'react-icons/ai'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { BookContext } from '../../Context/App.context'

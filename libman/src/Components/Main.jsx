@@ -10,7 +10,7 @@ import Header from './NavBar/Header'
 import BookContent from './SingleBook/BookContent'
 
 function Main() {
-  const { isLoggedIn, username } = useContext(BookContext)
+  const { isLoggedIn, uname } = useContext(BookContext)
   const [width, setWidth] = useState(localStorage.getItem("user") ? localStorage.getItem("user") : "Username")
   const [w,setW] = useState(window.innerWidth)
 
@@ -35,9 +35,9 @@ function Main() {
   return (
       <>
         <Router>
-          <Header width={width}/>
+          <Header width={uname}/>
           <Routes>
-            <Route index path='/' element={<HomeCard width={username}/>} />
+            <Route index path='/' element={<HomeCard width={uname}/>} />
             <Route index path='/upcoming' element={<HomeCard width={width}/>} />
             <Route path='/toprated' element={<HomeCard width={width}/>} />
             <Route path='/nowplaying' element={<HomeCard width={width}/>} />

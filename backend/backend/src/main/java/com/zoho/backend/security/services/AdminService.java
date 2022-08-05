@@ -1,6 +1,7 @@
 package com.zoho.backend.security.services;
 
 import com.zoho.backend.models.Movies;
+import com.zoho.backend.models.Role;
 import com.zoho.backend.models.User;
 import com.zoho.backend.repository.MovieRepository;
 import com.zoho.backend.repository.UserRepository;
@@ -21,7 +22,16 @@ public class AdminService {
     UserRepository userRepository;
 
     public List<User> allMovies(){
-        return userRepository.findAll();
+        List<User> users = userRepository.findAll();
+        List<User> newUsers = new ArrayList<>();
+        for (User user: users) {
+            for (Role role: user.getRoles()) {
+                if (!Objects.equals(role.getName().toString(), "ROLE_ADMIN")) {
+                    newUsers.add(user);
+                }
+            }
+        }
+        return newUsers;
     }
 
     public List<Movies> allUserMovies(String user){

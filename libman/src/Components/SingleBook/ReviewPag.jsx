@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import ReactPaginate from 'react-paginate'
 import { IconContext } from 'react-icons'
 import { GrNext, GrPrevious } from 'react-icons/gr'
@@ -12,7 +12,6 @@ function ReviewPag() {
 
     const { movieReviews,movieReviewsPage } = useContext(BookContext)
     
-    const [ users, setUsers ] = useState(movieReviews)
     const [ pageNumber, setPageNumber ] = useState(0)
     
     const userPerPage = 5

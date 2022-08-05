@@ -11,11 +11,10 @@ import { IoHeartOutline } from 'react-icons/io5'
 import { MdPlaylistAdd,MdOutlinePlaylistAddCheck } from 'react-icons/md'
 import { IconContext } from 'react-icons'
 
-import im from '../../Images/971.jpg'
+// import im from '../../Images/971.jpg'
 import Login from '../Modals/Login'
 import { BookContext } from '../../Context/App.context'
 import { useNavigate } from 'react-router-dom'
-import SuccessToast from '../Modals/SuccessToast'
 
 function Cards({k,data,s}) {
     const navigate = useNavigate()

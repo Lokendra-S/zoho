@@ -63,7 +63,7 @@ function HomeCard({width}) {
     <Container fluid className='mt-2'>
         <Container fluid className='px-5 d-flex align-items-center justify-content-between book_head'>
             <h1 className='fs-3 fw-bold text-center text-uppercase book_headline'>Movies</h1>
-            {   loc === "/profile" &&
+            {/* {   loc === "/profile" &&
                 <Dropdown>
                     <Dropdown.Toggle variant="dark" className='shadow-none' id="dropdown-basic">
                         All
@@ -90,7 +90,7 @@ function HomeCard({width}) {
                         </Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
-            }
+            } */}
         </Container>
         <Pagination loc={loc} />
         <SuccessToast

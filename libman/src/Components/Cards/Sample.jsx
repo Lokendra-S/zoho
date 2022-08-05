@@ -1,29 +1,21 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { BookContext } from '../../Context/App.context'
 import {
     Container,
-    Dropdown,
-    Row,
-
 } from 'react-bootstrap'
-import { IconContext } from 'react-icons'
-import { BsArrowDown, BsArrowUp } from 'react-icons/bs'
 
-import Cards from './Card'
 import Pagination from './Pagination'
 
 function Sample() {
   const [search] = useSearchParams()
   const loc = useLocation()
-  console.log(loc)
   
   const navigate = useNavigate()
-  const { fetchMovieSearch,movies,searchData } = useContext(BookContext)
+  const { fetchMovieSearch,setSearchData } = useContext(BookContext)
   
   useEffect(() => {
     if(search.get("name")){
-      console.log(search.get("name"))
       fetchMovieSearch(search.get("name"))
     }else{
       navigate("/")

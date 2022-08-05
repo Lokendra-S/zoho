@@ -43,7 +43,7 @@ function Pagination({loc}) {
     useEffect(() => {
         const timer = setTimeout(() => {
           if(renderer.length === 0){
-            setText("Movie List is empty.")
+            setText("Query returns as empty.")
           }
         }, 4000);
         return () => clearTimeout(timer);

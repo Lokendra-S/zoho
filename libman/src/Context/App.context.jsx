@@ -8,7 +8,7 @@ export const AppContext = ({children}) => {
     Single Movie Starts
   */
   const [movieData,setMovieData]=useState('')
-  const [searchData,setSearchData]=useState([{}])
+  const [searchData,setSearchData]=useState([])
   const [movieDesc,setMovieDesc]=useState('')
   const [movieReviews,setMovieReviews]=useState([])
   const [movieReviewsPage,setMovieReviewsPage]=useState(0)
@@ -24,6 +24,10 @@ export const AppContext = ({children}) => {
   useEffect(() => {
     setPopularMoviePages(popularMoviePages)
   },[popularMoviePages])
+  useEffect(() => {
+    setSearchData(searchData)
+    console.log(searchData)
+  },[searchData])
 
   const fetchMovieSearch = async(mId) => {
     await axios.post("http://localhost:8080/api/movie/searchMovie",{
@@ -543,14 +547,6 @@ export const AppContext = ({children}) => {
   const [ userhMovieLength,setUserMovieLength ] = useState([])
   const [ userMoviesInd,setUserMoviesInd ] = useState([])
 
-  // useEffect(() => {
-  //   console.log(users,userhMovieLength,wishlistLen,favouriteLen,playingLen)
-  // },[users,userhMovieLength,wishlistLen,favouriteLen,playingLen])
-
-  // useEffect(()=>{
-  //   setUsers(users)
-  // },[users])
-
   const allUsers = async() => {
     axios.get("http://localhost:8080/api/admin/home",{
       headers: {
@@ -603,9 +599,11 @@ export const AppContext = ({children}) => {
       if (data.status === 200){
         console.log(data.data)
         allUsers()
+      }else{
+        alert("Cannot Delete Admin.")
       }
     }).catch(e => {
-      alert("Error occured while performing query kindly try again later."+e.message)
+      alert("Error occured while performing query kindly try again later.")
     })
   }
 
@@ -688,6 +686,7 @@ export const AppContext = ({children}) => {
       //search
       fetchMovieSearch : fetchMovieSearch,
       searchData : searchData,
+      setSearchData : setSearchData,
 
       //admin
       allUsers : allUsers,

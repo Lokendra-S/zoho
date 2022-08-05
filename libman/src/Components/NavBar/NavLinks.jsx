@@ -7,7 +7,7 @@ import {
 } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 
-function NavLinks() {
+function NavLinks({username}) {
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
             <Container fluid>
@@ -18,8 +18,12 @@ function NavLinks() {
                         <NavLink className='text-uppercase home_nav px-3 nav-link' to="/upcoming">upcoming</NavLink>
                         <NavLink className='text-uppercase home_nav px-3 nav-link' to="/toprated">top rated</NavLink>
                         <NavLink className='text-uppercase home_nav px-3 nav-link' to="/nowplaying">now playing</NavLink>
-                        <NavLink className='text-uppercase home_nav px-3 nav-link' to="/profile">My List</NavLink>
-                        {/* <NavLink className='text-uppercase home_nav px-3 nav-link' to="/:id/cart">cart</NavLink> */}
+                        {   username !== "username" &&
+                            <NavLink className='text-uppercase home_nav px-3 nav-link' to="/profile">My List</NavLink>
+                        }
+                        {   username === "admin" &&
+                            <NavLink className='text-uppercase home_nav px-3 nav-link' to="/admin">Admin Panel</NavLink>
+                        }
                     </Nav>
                 </Navbar.Collapse>
             </Container>

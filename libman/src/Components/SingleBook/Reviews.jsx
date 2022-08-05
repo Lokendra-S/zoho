@@ -2,10 +2,7 @@ import React from 'react'
 
 import { 
     Card, 
-    Container, 
-    Row,
-    Button, 
-    Col
+    Container
 } from 'react-bootstrap'
 
 import im from '../../Images/971.jpg'
