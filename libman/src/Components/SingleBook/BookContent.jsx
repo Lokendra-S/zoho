@@ -90,7 +90,7 @@ function BookContent() {
                               <Card.Text className=''>
                                   Released on : {movieData.description}
                               </Card.Text>
-                              <Container fluid className='d-flex gap-3 justify-content-start p-0'>
+                              {*<Container fluid className='d-flex gap-3 justify-content-start p-0'>
                                   <Button variant="danger" className='cart_btn shadow-none'>
                                       <IconContext.Provider value = {{className:"cart_icon fs-4"}}>
                                           <BsCartPlus />
@@ -102,7 +102,7 @@ function BookContent() {
                                       </IconContext.Provider>
                                       <p className='mb-0 buy_text'>Play</p>
                                   </Button>
-                              </Container>
+                              </Container>*}
                           </Container>
                       </Card.Body>
                       <Card.Body className='moviePosters'>
